@@ -12,11 +12,21 @@ export const Container_formLogin = styled.div`
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
 
+    @media (min-width: 380px) {
+        min-width: 380px;
+    }
+
+
     .input-field {
         display: flex;
         flex-direction: column;
         width: 235px;
         position: relative;
+
+        @media (min-width: 380px) {
+            min-width: 330px;
+        }
+
 
         .eye {
             position: absolute;

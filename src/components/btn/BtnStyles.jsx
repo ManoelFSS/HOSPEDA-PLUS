@@ -6,8 +6,8 @@ export const Button = styled.button`
     border-radius: 5px;
     border: none;
     outline: none;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #bbb;
     font-size: 1.1rem;
     font-weight: bolder;
     cursor: pointer;

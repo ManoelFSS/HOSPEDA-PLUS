@@ -5,36 +5,28 @@ export const Container_formLogin = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 300px;
-    min-width: 280px;
-    max-height: 400px;
-    min-height: 320px;
+    padding:20px 20px ;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
-
-    @media (min-width: 380px) {
-        min-width: 380px;
-    }
-
+    gap: 5px;
 
     .input-field {
         display: flex;
         flex-direction: column;
-        width: 235px;
+        width: 350px;
         position: relative;
 
-        @media (min-width: 380px) {
-            min-width: 330px;
+        @media (max-width: 422px) {
+            width: 240px;
         }
-
 
         .eye {
             position: absolute;
             bottom:10px;
             right: 12px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
-            color: #ddd;
+            color: #aaa;
             transition: all 0.3s;
 
             &:hover {
@@ -44,7 +36,7 @@ export const Container_formLogin = styled.div`
 
         label {
             font-size: 1.2rem;
-            padding: 4px ;
+            padding: 10px 4px ;
             color: #fff;
         }
 
@@ -58,11 +50,12 @@ export const Container_formLogin = styled.div`
             background-color: transparent;
             box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
             color: #fff;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
         input::placeholder {
             color: #bbb;
+            font-size: 1rem;
         }
 
         input:active,
@@ -83,7 +76,7 @@ export const Container_formLogin = styled.div`
         cursor: pointer;
         trasition: all 0.3s;
         text-align: right;
-        color: #ddd;
+        color: #bbb;
         padding: 8px 0;
 
         &:hover {
@@ -92,14 +85,15 @@ export const Container_formLogin = styled.div`
     }
 
     h3 {
-        color: #ddd;
+        color: #bbb;
         text-align: center;
         font-size: 1rem;
         font-weight: bolder;
         margin-top: 10px;
+        margin-bottom: 15px;
         cursor: pointer;
         trasition: all 0.3s;
-        border:solid 1px #ddd;
+        border:solid 1px #bbb;
         padding: 10px 20px;
 
         &:hover {

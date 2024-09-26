@@ -59,22 +59,18 @@ export const Container_login = styled.section`
         flex:1;
         display: flex;
         align-items: center;
-        padding-left: 10%;
+        justify-content: center;
         background: url("https://primetour.b-cdn.net/wp-content/uploads/2016/05/w_dubai_al_habtoor_city_emirados_arabes_hotel_primetour_viagens_luxo_viagem_01-1200x609.jpg") no-repeat right center / 100% 100% ; 
-        position: relative;
-
-        @media (max-width: 800px) {
-            justify-content: center;
-            padding: 10px;
-        }       
+        position: relative;  
+        padding: 1rem;   
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 730px) {
         flex-direction: column;
 
         .box-left {
             min-width: 100%;
-            padding: 10px;
+            padding-top: 1rem;
         }
     }
 

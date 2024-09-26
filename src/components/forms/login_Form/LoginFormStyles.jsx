@@ -5,7 +5,7 @@ export const Container_formLogin = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding:20px 20px ;
+    padding:20px 30px ;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
     gap: 5px;
@@ -17,7 +17,15 @@ export const Container_formLogin = styled.div`
         position: relative;
 
         @media (max-width: 422px) {
-            width: 240px;
+            width: 310px;
+        }
+
+        @media (max-width: 375px) {
+            width: 270px;
+        }
+
+        @media (max-width: 340px) {
+            width: 230px;
         }
 
         .eye {
@@ -37,7 +45,7 @@ export const Container_formLogin = styled.div`
         label {
             font-size: 1.2rem;
             padding: 10px 4px ;
-            color: #fff;
+            color: #bbb;
         }
 
         input {
@@ -51,6 +59,7 @@ export const Container_formLogin = styled.div`
             box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
             color: #fff;
             font-size: 1rem;
+            cursor: pointer;
         }
 
         input::placeholder {
@@ -69,6 +78,15 @@ export const Container_formLogin = styled.div`
             -webkit-text-fill-color: #fff;
             background-color: rgba(0, 0, 0, 1) !important; 
         }
+
+        input:hover::placeholder {
+            color: #fff;
+        }
+
+        &:hover label {
+            color: #fff;
+        }
+
     }
 
     p {
@@ -102,5 +120,23 @@ export const Container_formLogin = styled.div`
         }
     }
 
+    .btn {
+        width: 100%;
+        height: 40px;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        background-color: rgba(0, 0, 0, 0.4);
+        color: #bbb;
+        font-size: 1.1rem;
+        font-weight: bolder;
+        cursor: pointer;
+        trasition: all 0.3s;
+
+        &:hover {
+            background-color: #000;
+            color: #fff;
+        }
+    }
 
 `

@@ -1,8 +1,8 @@
 import { Button } from "./BtnStyles";
 
-const Btn = ({text}) => {
+const Btn = ({text, onClick}) => {
     return (
-        <Button>{text}</Button>
+        <Button type="submit" value={text} onClick={onClick} />
     )
 }
 

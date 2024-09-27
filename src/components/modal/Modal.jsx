@@ -10,7 +10,7 @@ const Modal = ({text, setModal, modal}) => {
             <div className="container">
                 <div className="icon-container">
                     <BiSolidError className="icon-error" />
-                    <FaWindowClose  className="icon-close" onClick={() => setModal(false)} />
+                    <FaWindowClose  className="icon-close" onClick={() => setModal(!modal)} />
                 </div>
                 <p>{text}</p>
             </div>

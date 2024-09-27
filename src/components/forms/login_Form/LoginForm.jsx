@@ -67,56 +67,63 @@ const LoginForm = () => {
         verifyEmail(email); // Verifica o email no momento do submit
     }
 
+    const hendlerModal = () => {
+        setModal(!modal);
+        setEmail("");
+        setPassword("");
+    }
+
     return (
         <>
-        <Container_formLogin>
-            <form onSubmit={handleSubmit}>
-                <div className="input-field">
-                    <label htmlFor="email">E-mail</label>
-                    <input 
-                        type="email" 
-                        id="email"  
-                        value={email}
-                        placeholder="Digite seu e-mail" 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        
-                    />
-                </div>
-                <div className="input-field">
-                    <label htmlFor="password">Senha</label>
-                    <input 
-                        type={typeInput} 
-                        id="password" 
-                        placeholder="Digite sua senha"
-                        value={password}
-                        autoComplete="email" 
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                    { showPassword ? 
-                        <FaEyeSlash className="eye" 
-                            onClick={() => { setShowPassword(!showPassword); setTypeInput("text")}} 
-                        /> : 
-                        <FaEye className="eye" 
-                            onClick={() => { setShowPassword(!showPassword); setTypeInput("password")}} 
+            <Container_formLogin>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-field">
+                        <label htmlFor="email">E-mail</label>
+                        <input 
+                            type="email" 
+                            id="email"  
+                            value={email}
+                            placeholder="Digite seu e-mail" 
+                            onChange={(e) => setEmail(e.target.value)} 
+                            
                         />
-                    }
-                </div>
-                <p>Esqueceu sua senha?</p>
-                <input 
-                    className="btn" 
-                    type="submit"
-                    value={"Entrar"}
-                    autoComplete="current-password" 
-                    onClick={(event) => handleSubmit(event)}
-                />
-            </form>
-            <h3>Cadastre-se</h3>
-        </Container_formLogin>
+                    </div>
+                    <div className="input-field">
+                        <label htmlFor="password">Senha</label>
+                        <input 
+                            type={typeInput} 
+                            id="password" 
+                            placeholder="Digite sua senha"
+                            value={password}
+                            autoComplete="email" 
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        { showPassword ? 
+                            <FaEyeSlash className="eye" 
+                                onClick={() => { setShowPassword(!showPassword); setTypeInput("text")}} 
+                            /> : 
+                            <FaEye className="eye" 
+                                onClick={() => { setShowPassword(!showPassword); setTypeInput("password")}} 
+                            />
+                        }
+                    </div>
+                    <p>Esqueceu sua senha?</p>
+                    <input 
+                        className="btn" 
+                        type="submit"
+                        value={"Entrar"}
+                        autoComplete="current-password" 
+                        onClick={(event) => handleSubmit(event)}
+                    />
+                </form>
+                <h3>Cadastre-se</h3>
+            </Container_formLogin>
             <Modal 
                 setModal={setModal}
                 modal={modal}
-                text={textError} />
+                text={textError} 
+            />
         </>
     );
 }

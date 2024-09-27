@@ -6,7 +6,7 @@ export const Container_formLogin = styled.div`
     align-items: center;
     justify-content: center;
     padding:20px 30px ;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 10px;
     gap: 5px;
 
@@ -34,18 +34,20 @@ export const Container_formLogin = styled.div`
             right: 12px;
             font-size: 1.1rem;
             cursor: pointer;
-            color: #aaa;
+            color: #000;
             transition: all 0.3s;
 
             &:hover {
-                color: #fff;
+                color: #F3AF00;
             }
         }
 
         label {
             font-size: 1.2rem;
+            font-weight: bolder;
             padding: 10px 4px ;
-            color: #bbb;
+            color: #000;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
         }
 
         input {
@@ -56,67 +58,64 @@ export const Container_formLogin = styled.div`
             outline: none;
             padding: 0 10px;
             background-color: transparent;
-            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
-            color: #fff;
+            box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.8);
+            color: #000;
             font-size: 1rem;
             cursor: pointer;
         }
 
         input::placeholder {
-            color: #bbb;
+            color: #000;
             font-size: 1rem;
         }
 
         input:active,
         input:focus,
         input:valid:not(:placeholder-shown) {
-            background-color: rgba(0, 0, 0, 1);
+            background-color: rgba(255, 255, 255, 1);
         }
 
         input:-webkit-autofill {
-            -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 1) inset;
-            -webkit-text-fill-color: #fff;
-            background-color: rgba(0, 0, 0, 1) !important; 
+            -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 1) inset;
+            -webkit-text-fill-color: #000;
+            background-color: rgba(255, 255, 255, 1) !important; 
         }
 
-        input:hover::placeholder {
-            color: #fff;
-        }
-
-        &:hover label {
-            color: #fff;
+        input:hover {
+            background-color: rgba(255, 255, 255, 1);
         }
 
     }
 
     p {
         font-size: 1rem;
+        font-weight: bolder;
         cursor: pointer;
         trasition: all 0.3s;
         text-align: right;
-        color: #bbb;
+        color: #000;
         padding: 8px 0;
+        trasition: all 0.3s;
 
         &:hover {
-            color: #fff;
+            text-decoration: underline;
         }
     }
 
     h3 {
-        color: #bbb;
+        color: #000;
         text-align: center;
-        font-size: 1rem;
+        font-size: 1.2rem;
         font-weight: bolder;
         margin-top: 10px;
         margin-bottom: 15px;
         cursor: pointer;
         trasition: all 0.3s;
-        border:solid 1px #bbb;
         padding: 10px 20px;
+        background-color: rgba(255, 255, 255, 0.7);
 
         &:hover {
-            color: #fff;
-            border:solid 1px #fff;
+            background-color: rgba(255, 255, 255, 1);
         }
     }
 
@@ -126,16 +125,15 @@ export const Container_formLogin = styled.div`
         border-radius: 5px;
         border: none;
         outline: none;
-        background-color: rgba(0, 0, 0, 0.4);
-        color: #bbb;
+        background-color: rgba(243, 174, 0, 0.7);
+        color: #000;
         font-size: 1.1rem;
         font-weight: bolder;
         cursor: pointer;
         trasition: all 0.3s;
 
         &:hover {
-            background-color: #000;
-            color: #fff;
+            background-color: rgba(243, 174, 0, 1);
         }
     }
 

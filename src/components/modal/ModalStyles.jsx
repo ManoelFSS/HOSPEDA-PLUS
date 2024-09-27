@@ -7,12 +7,11 @@ export const Modal_container = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-
 
     .container {
         background-color: #fff;
@@ -43,10 +42,10 @@ export const Modal_container = styled.div`
                 font-size: 1.4rem;
                 cursor: pointer;
                 transition: all 0.3s;
-                color: #F3AF00;
+                color: #000;
 
                 &:hover {
-                    color: red ;
+                    color: #F3AF00;
                 }
             }
         }
@@ -55,11 +54,10 @@ export const Modal_container = styled.div`
             width: 100%;
             height: auto;
             font-size: 0.9rem;
-            background-color: rgba(255, 0, 0, 0.5 );
+            background-color: rgba(255, 0, 0, 0.8 );
             padding: 10px;
             color: #fff;
             
         }
-
     }
 `

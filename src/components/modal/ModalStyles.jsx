@@ -55,9 +55,10 @@ export const Modal_container = styled.div`
             height: auto;
             font-size: 0.9rem;
             font-weight: 500;
-            background-color: rgba(255, 0, 0, 0.8 );
-            padding: 10px;
+            background-color: rgba(255, 0, 0, 1 );
+            padding: 10px 10px 0px;
             color: #fff;
+            text-align: center;
         }
     }
 `

@@ -4,14 +4,15 @@ import { validateLoginSchema } from "../../../schemas/loginSchema.js";
 // components
 import { Container_formLogin } from "./LoginFormStyles";
 import Modal from "../../modal/Modal";
-import { useAuth } from "../../../contexts/AuthContext.jsx";
+import { useAuth } from "../../../contexts/AuthContext";
+import Loader from "../../load/Load.jsx";
 // icons
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 
 const LoginForm = () => {
 
-    const { loginUser} = useAuth();
+    const { loginUser, loading,  setLoading} = useAuth();
 
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
@@ -37,14 +38,27 @@ const LoginForm = () => {
 
     const verifyTypes = async () => {
         try {
-            
-            const res =  validateLoginSchema( email, password ); // validação do esquema
-            await loginUser(res.email, res.password);
+            setLoading(true);
+            const res =  validateLoginSchema( email, password ); // validação do schema zod
+            const success = await loginUser(res.email, res.password);
+
+            if(success){
+                setLoading(false);
+                setModal(true);
+                setTextError('Login efetuado com sucesso!');
+            }else{
+                setModal(true);
+                setTextError('Erro  de autenticação. Verifique seu e-mail e senha e tente novamente');
+                return
+            }
 
         } catch (error) {
             const errorMessage = error.errors[0]?.message || 'Erro de validaçao dos campos do email e senha de autenticação';
             setTextError(errorMessage);
-            setModal(true);
+            setTimeout(() => {
+                setLoading(false);
+                setModal(true);
+            },2000)
         }
     };
 
@@ -104,7 +118,9 @@ const LoginForm = () => {
                     />
                 </form>
                 <h3>Cadastre-se</h3>
+                { loading && <Loader />}
             </Container_formLogin>
+            
             <Modal 
                 setModal={setModal}
                 modal={modal}

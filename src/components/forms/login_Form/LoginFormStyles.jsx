@@ -9,7 +9,8 @@ export const Container_formLogin = styled.div`
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 10px;
     gap: 5px;
-
+    position: relative;
+    
     .input-field {
         display: flex;
         flex-direction: column;

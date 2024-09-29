@@ -12,7 +12,15 @@ const Modal = ({text, setModal, modal}) => {
                     <BiSolidError className="icon-error" />
                     <FaWindowClose  className="icon-close" onClick={() => setModal(!modal)} />
                 </div>
-                <p>{text}</p>
+                <p>
+                    {text.split('\n').map((line, index) => (
+                        <span key={index}>
+                            {line}
+                            <br />
+                            <br />
+                        </span>
+                    ))}
+                </p>
             </div>
         </Modal_container>
         

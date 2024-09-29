@@ -1,77 +1,67 @@
 import React, { useState } from "react";
-import axios from 'axios';
-import { z } from "zod";
+import validator from 'validator';
+import { validateLoginSchema } from "../../../schemas/loginSchema.js";
 // components
 import { Container_formLogin } from "./LoginFormStyles";
 import Modal from "../../modal/Modal";
+import { useAuth } from "../../../contexts/AuthContext.jsx";
 // icons
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-
-// Defina seu esquema de validação
-const schema = z.object({
-    email: z.string()
-        .regex(/^[^\s@]+@(gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|live\.com)$/, {
-            message: "E-mail inválido por favor tente novamente, => exemplo@gmail.com",
-        }),
-    password: z.string()
-        .min(8, "A senha deve ter pelo menos 8 caracteres")
-        .regex(/[A-Z]/, "A senha deve conter pelo menos uma letra maiúscula")
-        .regex(/[0-9]/, "A senha deve conter pelo menos um número")
-        .regex(/[!@#$%^&*]/, "A senha deve conter pelo menos um caractere especial"),
-});
-
 
 
 const LoginForm = () => {
 
-    const [showPassword, setShowPassword] = useState(true);
-    const [typeInput, setTypeInput] = useState("password");
+    const { loginUser} = useAuth();
+
+    const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [modal, setModal] = useState(false);
     const [textError, setTextError] = useState("");
 
-    const verifyEmail = async (email) => {
+    const validateEmail = (email) => {
 
-        if (email !== "") {
-            try {
-                const res =  schema.parse({ email, password });
+        const allowedDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com'];
 
-                    alert("E-mail Valido"); // aqui posso fazer o envio dos dados para o back-end
+        if (!validator.isEmail(email)) {
+            return 'E-mail inválido!';
+        }
 
-                // }
+        const domain = email.split('@')[1];
+        if (!allowedDomains.includes(domain)) {
+            return 'Domínio não permitido! Verifique seu e-mail e tente novamente. Dominios Permitidos\n ' + allowedDomains.join('' + '\n');
+        }
 
-            } catch (error) {
-                if (error instanceof z.ZodError) {
-                    // Acessa o array de erros e pega a mensagem do erro específico
-                    error.errors.forEach(err => {
-                        console.log(err.message); // Exibe a mensagem do erro
-                        setTextError(err.message);
-                        setModal(true);
-                    });
-                } else {
-                    setTextError( error.message);
-                    console.log('Erro ao verificar o e-mail:', error);
-                }
-            }
+        verifyTypes();
+    };
 
-        }else{
-            setTextError( "campo email obrigatório preenchar com o seu e-mail" );
+    const verifyTypes = async () => {
+        try {
+            
+            const res =  validateLoginSchema( email, password ); // validação do esquema
+            await loginUser(res.email, res.password);
+
+        } catch (error) {
+            const errorMessage = error.errors[0]?.message || 'Erro de validaçao dos campos do email e senha de autenticação';
+            setTextError(errorMessage);
             setModal(true);
         }
-        
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault(); // Prevenir o comportamento padrão do formulário
-        verifyEmail(email); // Verifica o email no momento do submit
-    }
+        event.preventDefault(); 
+        if(email !== "" && password !== ""){
+            const validationResult = validateEmail(email);
+            if ( typeof validationResult === "string") {
+                setTextError(validationResult);
+                setModal(true);
+            }
+        }     
+    };
 
-    const hendlerModal = () => {
-        setModal(!modal);
-        setEmail("");
-        setPassword("");
-    }
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     return (
         <>
@@ -84,37 +74,33 @@ const LoginForm = () => {
                             id="email"  
                             value={email}
                             placeholder="Digite seu e-mail" 
-                            onChange={(e) => setEmail(e.target.value)} 
-                            
+                            onChange={(e) => setEmail(e.target.value.trim().toLowerCase())} 
+                            required
+                            autoComplete="email"
                         />
                     </div>
                     <div className="input-field">
                         <label htmlFor="password">Senha</label>
                         <input 
-                            type={typeInput} 
+                            type={showPassword ? "password" : "text"} 
                             id="password" 
                             placeholder="Digite sua senha"
                             value={password}
-                            autoComplete="email" 
-                            onChange={(e) => setPassword(e.target.value)}
+                            autoComplete="current-password" 
+                            onChange={(e) => setPassword(e.target.value.trim())}
                             required
                         />
-                        { showPassword ? 
-                            <FaEyeSlash className="eye" 
-                                onClick={() => { setShowPassword(!showPassword); setTypeInput("text")}} 
-                            /> : 
-                            <FaEye className="eye" 
-                                onClick={() => { setShowPassword(!showPassword); setTypeInput("password")}} 
-                            />
-                        }
+                        {showPassword ? (
+                            <FaEyeSlash className="eye" onClick={togglePasswordVisibility} />
+                        ) : (
+                            <FaEye className="eye" onClick={togglePasswordVisibility} />
+                        )}
                     </div>
                     <p>Esqueceu sua senha?</p>
                     <input 
                         className="btn" 
                         type="submit"
-                        value={"Entrar"}
-                        autoComplete="current-password" 
-                        onClick={(event) => handleSubmit(event)}
+                        value="Entrar"
                     />
                 </form>
                 <h3>Cadastre-se</h3>
@@ -126,6 +112,6 @@ const LoginForm = () => {
             />
         </>
     );
-}
+};
 
 export default LoginForm;

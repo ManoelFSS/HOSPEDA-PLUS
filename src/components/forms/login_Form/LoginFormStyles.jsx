@@ -47,7 +47,6 @@ export const Container_formLogin = styled.div`
             font-weight: bolder;
             padding: 10px 4px ;
             color: #000;
-            text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
         }
 
         input {
@@ -60,7 +59,7 @@ export const Container_formLogin = styled.div`
             background-color: transparent;
             box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.8);
             color: #000;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
         }
 
@@ -88,7 +87,7 @@ export const Container_formLogin = styled.div`
     }
 
     p {
-        font-size: 1rem;
+        font-size: 1.1rem;
         font-weight: bolder;
         cursor: pointer;
         trasition: all 0.3s;
@@ -113,6 +112,7 @@ export const Container_formLogin = styled.div`
         trasition: all 0.3s;
         padding: 10px 20px;
         background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 5px;
 
         &:hover {
             background-color: rgba(255, 255, 255, 1);

@@ -13,13 +13,7 @@ const Modal = ({text, setModal, modal}) => {
                     <FaWindowClose  className="icon-close" onClick={() => setModal(!modal)} />
                 </div>
                 <p>
-                    {text.split('\n').map((line, index) => (
-                        <span key={index}>
-                            {line}
-                            <br />
-                            <br />
-                        </span>
-                    ))}
+                    {text}
                 </p>
             </div>
         </Modal_container>

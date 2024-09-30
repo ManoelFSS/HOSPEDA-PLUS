@@ -21,16 +21,11 @@ const LoginForm = () => {
     const [textError, setTextError] = useState("");
 
     const validateEmail = (email) => {
-
         const allowedDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com'];
-
-        if (!validator.isEmail(email)) {
-            return 'E-mail inválido!';
-        }
 
         const domain = email.split('@')[1];
         if (!allowedDomains.includes(domain)) {
-            return 'Domínio não permitido! Verifique seu e-mail e tente novamente. Dominios Permitidos\n ' + allowedDomains.join('' + '\n');
+            return "E-mail inválido, Por favor verifique seu e-mail e tente novamente.";
         }
 
         verifyTypes();
@@ -64,11 +59,16 @@ const LoginForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault(); 
+        setLoading(true);
         if(email !== "" && password !== ""){
+            
             const validationResult = validateEmail(email);
             if ( typeof validationResult === "string") {
                 setTextError(validationResult);
-                setModal(true);
+                setTimeout(() => {
+                    setLoading(false);
+                    setModal(true);
+                },2000)
             }
         }     
     };
@@ -96,7 +96,7 @@ const LoginForm = () => {
                     <div className="input-field">
                         <label htmlFor="password">Senha</label>
                         <input 
-                            type={showPassword ? "password" : "text"} 
+                            type={showPassword ? "text" : "password"} 
                             id="password" 
                             placeholder="Digite sua senha"
                             value={password}
@@ -105,9 +105,9 @@ const LoginForm = () => {
                             required
                         />
                         {showPassword ? (
-                            <FaEyeSlash className="eye" onClick={togglePasswordVisibility} />
-                        ) : (
                             <FaEye className="eye" onClick={togglePasswordVisibility} />
+                        ) : (
+                            <FaEyeSlash className="eye" onClick={togglePasswordVisibility} />
                         )}
                     </div>
                     <p>Esqueceu sua senha?</p>

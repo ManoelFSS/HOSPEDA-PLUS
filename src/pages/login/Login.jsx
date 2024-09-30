@@ -16,9 +16,9 @@ const Login = () => {
                 <h1>HOSPEDA PLUS</h1>
                 <p>Mais do que um Sistema</p>
                 <div className="icons">
-                    <FaWhatsapp className="whatsapp" />
-                    <FaFacebook className="facebook" />
-                    <FaInstagram className="instagram" />
+                    <FaWhatsapp className="whatsapp" onClick={() => window.open('https://wa.me/5574935050160', '_blank')} />
+                    <FaFacebook className="facebook" onClick={() => window.open('https://www.facebook.com/manoel.fernando.50', '_blank')} />
+                    <FaInstagram className="instagram" onClick={() => window.open('https://www.instagram.com/manoelfernandoplk/', '_blank')} />
                 </div>
             </section>
             <section className="box-right">

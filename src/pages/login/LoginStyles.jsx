@@ -1,6 +1,11 @@
 import styled from "styled-components"; 
-// import image_hotel from "../../assets/images/hotel.png";
-
+//images
+import image_hotel from "../../assets/images/hotel.png";
+import image_hotel01 from "../../assets/images/hotel01.jpg";
+import image_hotel02 from "../../assets/images/hotel02.jpg";
+import image_hotel03 from "../../assets/images/hotel03.webp";
+import image_hotel04 from "../../assets/images/hotel04.jpg";
+import image_hotel05 from "../../assets/images/hotel05.jpg";
 
 export const Container_login = styled.section`
     display: flex;
@@ -15,6 +20,7 @@ export const Container_login = styled.section`
         align-items: center;
         justify-content: center;
         border: 1px solid black;
+        position: relative;
 
         h1 {
             font-size: 1.4rem;
@@ -60,9 +66,57 @@ export const Container_login = styled.section`
         display: flex;
         align-items: center;
         justify-content: center;
-        background: url("https://primetour.b-cdn.net/wp-content/uploads/2016/05/w_dubai_al_habtoor_city_emirados_arabes_hotel_primetour_viagens_luxo_viagem_01-1200x609.jpg") no-repeat right center / 100% 100% ; 
         position: relative;  
         padding: 1rem;   
+        background: url(${image_hotel}) no-repeat right center / 100% 100% ; 
+        animation: fadeIn 30s infinite;
+
+        @keyframes fadeIn {
+            0%, 20% {
+                background: url(${image_hotel}) no-repeat right center / 100% 100% ; 
+            }
+            21%, 40% {
+                background: url(${image_hotel01}) no-repeat right center /100% 100% ; 
+            }
+            41%, 60% {
+                background: url(${image_hotel02}) no-repeat right center / 100% 100% ; 
+            }
+            61%, 80% {
+                background: url(${image_hotel03}) no-repeat right center / 100% 100% ; 
+            }
+            81%, 90% {
+                background: url(${image_hotel04}) no-repeat right center / 100% 100% ;
+            }
+            91%, 100% {
+                background: url(${image_hotel05}) no-repeat right center / 100% 100% ;
+            }
+        }
+
+        .espelhor {
+            position: absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height: 100%;
+            z-index: 1;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .copyright {
+            position: absolute;
+            bottom: 0;
+            left:0;
+            font-size: 0.9rem;
+            color: #fff;
+            font-weight: bolder;
+            z-index: 2;
+            background-color: rgba(0,0,0,0.5);
+            padding: 0.5rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 
     @media (max-width: 730px) {

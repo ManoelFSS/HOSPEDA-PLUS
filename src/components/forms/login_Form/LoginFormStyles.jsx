@@ -10,6 +10,7 @@ export const Container_formLogin = styled.div`
     border-radius: 10px;
     gap: 5px;
     position: relative;
+    z-index: 9;
     
     .input-field {
         display: flex;

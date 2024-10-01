@@ -1,4 +1,4 @@
-import { Container_login } from "./LoginStyles";
+import { Container_login} from "./LoginStyles";
 //imges
 import image from "../../assets/images/icone.png";
 //components
@@ -6,7 +6,6 @@ import Logo from "../../components/logo/Logo";
 import LoginForm from "../../components/forms/login_Form/LoginForm";
 // icons
 import { FaWhatsapp, FaFacebook, FaInstagram  } from "react-icons/fa";
-
 
 const Login = () => {
     return (
@@ -22,7 +21,10 @@ const Login = () => {
                 </div>
             </section>
             <section className="box-right">
+                <div className="espelhor">
+                </div>                      
                 <LoginForm />
+                <p className="copyright"> © 2024 Hospeda Plus.</p>
             </section>
         </Container_login>
     )

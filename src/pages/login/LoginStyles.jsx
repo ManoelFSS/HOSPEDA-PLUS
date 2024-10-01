@@ -67,7 +67,7 @@ export const Container_login = styled.section`
         align-items: center;
         justify-content: center;
         position: relative;  
-        padding: 1rem;   
+        padding: 2rem 1rem 3rem;   
         background: url(${image_hotel}) no-repeat right center / 100% 100% ; 
         animation: fadeIn 30s ease infinite;
 
@@ -106,11 +106,11 @@ export const Container_login = styled.section`
             position: absolute;
             bottom: 0;
             left:0;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #fff;
-            font-weight: bolder;
+            font-weight: 100;
             z-index: 2;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0,0,0,0.8);
             padding: 0.5rem;
             width: 100%;
             display: flex;

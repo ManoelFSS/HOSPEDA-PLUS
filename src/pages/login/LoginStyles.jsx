@@ -69,25 +69,25 @@ export const Container_login = styled.section`
         position: relative;  
         padding: 1rem;   
         background: url(${image_hotel}) no-repeat right center / 100% 100% ; 
-        animation: fadeIn 30s infinite;
+        animation: fadeIn 30s ease infinite;
 
         @keyframes fadeIn {
-            0%, 20% {
+            0%{
                 background: url(${image_hotel}) no-repeat right center / 100% 100% ; 
             }
-            21%, 40% {
+            40% {
                 background: url(${image_hotel01}) no-repeat right center /100% 100% ; 
             }
-            41%, 60% {
+            60% {
                 background: url(${image_hotel02}) no-repeat right center / 100% 100% ; 
             }
-            61%, 80% {
+            80% {
                 background: url(${image_hotel03}) no-repeat right center / 100% 100% ; 
             }
-            81%, 90% {
+            90% {
                 background: url(${image_hotel04}) no-repeat right center / 100% 100% ;
             }
-            91%, 100% {
+            100% {
                 background: url(${image_hotel05}) no-repeat right center / 100% 100% ;
             }
         }

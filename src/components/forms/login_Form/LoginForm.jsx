@@ -12,7 +12,7 @@ import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 const LoginForm = () => {
 
-    const { loginUser, loading,  setLoading} = useAuth();
+    const { loginUser, loading, setLoading} = useAuth();
 
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
@@ -38,9 +38,7 @@ const LoginForm = () => {
             const success = await loginUser(res.email, res.password);
 
             if(success){
-                setLoading(false);
-                setModal(true);
-                setTextError('Login efetuado com sucesso!');
+                console.log("Login bem-sucedido");
             }else{
                 setModal(true);
                 setTextError('Erro  de autenticação. Verifique seu e-mail e senha e tente novamente');

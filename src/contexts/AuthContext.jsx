@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     const loginUser = async (email, password) => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:5000/api/login', {
+            const response = await fetch('https://hospeda-back-end.vercel.app/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
         if (token) {
             // Faz a requisição para verificar o token
             axios
-                .get('http://localhost:5000/api/verify-token', { 
+                .get('https://hospeda-back-end.vercel.app/api/verify-token', { 
                     headers: { 
                         Authorization: `Bearer ${token}`,
                         UserId:_id,

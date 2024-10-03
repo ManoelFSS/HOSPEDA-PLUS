@@ -66,7 +66,6 @@ export const AuthProvider = ({ children }) => {
                 .get('https://hospeda-back-end-production.up.railway.app/api/verify-token', { 
                     headers: { 
                         Authorization: `Bearer ${token}`,
-                        UserId:_id,
                     } 
                 })
                 .then((response) => {

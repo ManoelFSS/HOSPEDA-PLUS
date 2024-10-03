@@ -11,10 +11,9 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('token')); // Adiciona estado para isLoggedIn
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token')); // Adiciona estado para isLoggedIn
 
-    // const navigate = useNavigate(); // Inicializa o useNavigate
-
+    // Método para login do usuário
     const loginUser = async (email, password) => {
         setLoading(true);
         try {
@@ -26,34 +25,62 @@ export const AuthProvider = ({ children }) => {
                 body: JSON.stringify({ email, password })
             });
 
+            // Verifique se a resposta é ok (status 200-299)
+            if (!response.ok) {
+                const errorData = await response.json();
+                // Retorna erro se não for bem-sucedido
+                throw new Error(errorData.message || 'Erro no login');
+            }
+
             const data = await response.json();
             console.log(data);
 
-            if (response.ok) {
-                // Login bem-sucedido
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('_id', data._id); // Salva o token no localStorage
-                setIsLoggedIn(true); // Atualiza o estado para indicar que o usuário está logado
-                return true;
-            } else {
-                // Falha no login
-                return false;
-            }
+            // Login bem-sucedido
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('_id', data._id);
+            setIsLoggedIn(true);
+            setUser(data.user); // Armazena os dados do usuário
+            return true;
+
         } catch (err) {
             console.log("Error during authentication:", err);
-            setError(err.response?.data.message || 'Erro inesperado');
+            setError(err.message || 'Erro inesperado'); // Atualiza a mensagem de erro
             setUser(null);
-            return { success: false, message: err.response?.data.message || 'Erro inesperado' }; // Retorna erro
+            return { success: false, message: err.message || 'Erro inesperado' }; // Retorna erro
         } finally {
             setLoading(false);
             console.log(localStorage.getItem('token'));
         }
     };
 
+    // Método para logout do usuário
     const logoutUser = () => {
         setUser(null); // Limpa os dados do usuário
         localStorage.removeItem('token'); // Remove o token do localStorage
         setIsLoggedIn(false); // Atualiza o estado para indicar que o usuário não está mais logado
+    };
+
+    // Método para atualizar o token
+    const refreshToken = async () => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            try {
+                const response = await axios.get('https://hospeda-back-end-production.up.railway.app/api/refresh-token', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                if (response.data.token) {
+                    localStorage.setItem('token', response.data.token);
+                    console.log('Token atualizado com sucesso');
+                }
+            } catch (error) {
+                console.error('Erro ao atualizar o token:', error);
+                logoutUser(); // Logout caso o refresh falhe
+            }
+        }
     };
 
     // Verifica se o usuário está autenticado
@@ -73,7 +100,7 @@ export const AuthProvider = ({ children }) => {
                     console.log(response.data);
 
                     if (response.data.message === 'Token válido') {
-                        localStorage.setItem('token', response.data.token)
+                        localStorage.setItem('token', response.data.token);
                         console.log('Token verificado com sucesso:');
                         setUser(response.data.user); // Armazena os dados do usuário
                         setIsLoggedIn(true); // Marca o usuário como autenticado
@@ -101,9 +128,9 @@ export const AuthProvider = ({ children }) => {
             error, 
             isLoggedIn,
             loginUser, 
-            // logoutUser, // usar para deslogar o usuário
+            logoutUser, // usar para deslogar o usuário
+            refreshToken, // Método para atualizar o token
             setLoading,
-            
         }}>
             {children}
         </AuthContext.Provider>

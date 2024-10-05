@@ -6,13 +6,17 @@ import { Container_formLogin } from "./LoginFormStyles";
 import Modal from "../../modal/Modal";
 import { useAuth } from "../../../contexts/AuthContext";
 import Loader from "../../load/Load.jsx";
+import Btn from "../../btn/Btn.jsx";
+import CampoInput from "../../inputComponent/CampoInput.jsx";
+import FormWrapper from "../formWrapper/FormWrapper.jsx";
+
 // icons
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 
-const LoginForm = () => {
+const LoginForm = ({setToogleForm, toogleForm}) => {
 
-    const { loginUser, loading, setLoading} = useAuth();
+    const { loginUser, loading, setLoading} = useAuth();// provedor de contexto
 
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
@@ -77,11 +81,13 @@ const LoginForm = () => {
 
     return (
         <>
-            <Container_formLogin>
+            <FormWrapper>
+                { loading && <Loader />}
+                <h2>Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="input-field">
                         <label htmlFor="email">E-mail</label>
-                        <input 
+                        <CampoInput 
                             type="email" 
                             id="email"  
                             value={email}
@@ -89,18 +95,23 @@ const LoginForm = () => {
                             onChange={(e) => setEmail(e.target.value.trim().toLowerCase())} 
                             required
                             autoComplete="email"
+                            $bg_color_input="var(--color-input-bg)"
+                            $bg_hover_input="var(--color-input-bg-hover)"
                         />
                     </div>
+
                     <div className="input-field">
                         <label htmlFor="password">Senha</label>
-                        <input 
-                            type={showPassword ? "text" : "password"} 
+                        <CampoInput 
+                            type={showPassword ? "text" : "password"}
                             id="password" 
                             placeholder="Digite sua senha"
                             value={password}
                             autoComplete="current-password" 
                             onChange={(e) => setPassword(e.target.value.trim())}
                             required
+                            $bg_color_input="var(--color-input-bg)"
+                            $bg_hover_input="var(--color-input-bg-hover)"
                         />
                         {showPassword ? (
                             <FaEye className="eye" onClick={togglePasswordVisibility} />
@@ -109,16 +120,23 @@ const LoginForm = () => {
                         )}
                     </div>
                     <p>Esqueceu sua senha?</p>
-                    <input 
-                        className="btn" 
-                        type="submit"
-                        value="Entrar"
+                    <Btn 
+                        type="submit" 
+                        value="Entrar" 
+                        $width="100%" 
+                        $bg_color="var(--color-primary-btn-bg)"
+                        $bg_hover="var(--color-primary-btn-bg-hover)"
                     />
                 </form>
-                <h3>Cadastre-se</h3>
-                { loading && <Loader />}
-            </Container_formLogin>
-            
+                <Btn 
+                    type="button"
+                    value="Cadastre-se" 
+                    $width="100%" 
+                    $bg_color="var(--color-secondary-btn-bg)"
+                    $bg_hover="var(--color-secondary-btn-bg-hover)"
+                    onClick={() => setToogleForm(!toogleForm)}
+                />
+            </FormWrapper> 
             <Modal 
                 setModal={setModal}
                 modal={modal}

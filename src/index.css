@@ -5,3 +5,16 @@
   font-family: "Montserrat", sans-serif;
  /* color :rgba(243, 174, 0, 0.697); */
 }
+
+:root {
+  --color-primary-btn-bg: rgba(243, 174, 0, 0.7);
+  --color-primary-btn-bg-hover: rgba(243, 174, 0, 1);
+
+  --color-secondary-btn-bg: rgba(255, 255, 255, 0.7);
+  --color-secondary-btn-bg-hover: rgba(255, 255, 255,1);
+
+  --color-input-bg: "transparent";
+  --color-input-bg-hover: rgba(255, 255, 255,1);
+
+
+}

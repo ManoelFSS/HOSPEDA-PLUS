@@ -8,7 +8,14 @@ function App() {
 
   return (
     <>
-      { !isLoggedIn ?  <Login /> :  <Painel />  }
+      { !isLoggedIn ? 
+        ( 
+          <Login /> 
+        ) :  
+        (
+          <Painel /> 
+        ) 
+      }
     </>
   )
 }

@@ -1,8 +1,15 @@
 import { Button } from "./BtnStyles";
 
-const Btn = ({text, onClick}) => {
+const Btn = ( {type, value, $width,  $bg_color, $bg_hover, onClick} ) => {
     return (
-        <Button type="submit" value={text} onClick={onClick} />
+        <Button  
+            type={type} 
+            value={value} 
+            $width={$width} 
+            $bg_hover={$bg_hover}
+            $bg_color={ $bg_color} 
+            onClick={onClick} 
+        />
     )
 }
 

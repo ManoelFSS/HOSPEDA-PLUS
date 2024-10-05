@@ -18,7 +18,7 @@ export const LoaderContainer = styled.div`
   gap: 10px; /* Espaçamento entre as bolinhas */
   width: 100%;
   position: absolute;
-  top: 40px;
+  bottom: 5px;
   left: 50%;
   transform: translate(-50%, -50%);
 `;

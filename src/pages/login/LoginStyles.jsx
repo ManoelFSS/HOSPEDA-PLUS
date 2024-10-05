@@ -67,7 +67,7 @@ export const Container_login = styled.section`
         align-items: center;
         justify-content: center;
         position: relative;  
-        padding: 2rem 1rem 3rem;   
+        padding: 1rem 1rem 3rem;   
         background: url(${image_hotel}) no-repeat right center / 100% 100% ; 
         animation: fadeIn 30s ease infinite;
 
@@ -119,7 +119,7 @@ export const Container_login = styled.section`
         }
     }
 
-    @media (max-width: 730px) {
+    @media (max-width: 815px) {
         flex-direction: column;
 
         .box-left {

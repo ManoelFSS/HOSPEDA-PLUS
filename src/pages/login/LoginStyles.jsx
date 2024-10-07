@@ -90,26 +90,26 @@ export const Container_login = styled.section`
         justify-content: center;
         align-items: center;
         padding: 1rem ;   
-        background: url(${image_hotel}) no-repeat right center / cover ; 
         overflow: auto;
+        animation: fadeIn 40s 1s infinite;
         
         @keyframes fadeIn {
-            0%{
+            0%, 20%{
                 background: url(${image_hotel}) no-repeat right center / cover ; 
             }
-            40% {
+            20%, 40% {
                 background: url(${image_hotel01}) no-repeat right center / cover  ; 
             }
-            60% {
+            40%, 60% {
                 background: url(${image_hotel02}) no-repeat right center / cover  ; 
             }
-            80% {
+            60%, 80% {
                 background: url(${image_hotel03}) no-repeat right center / cover  ; 
             }
-            90% {
+            80%, 90% {
                 background: url(${image_hotel04}) no-repeat right center /cover  ;
             }
-            100% {
+            90%, 100% {
                 background: url(${image_hotel05}) no-repeat right center / cover ;
             }
         }

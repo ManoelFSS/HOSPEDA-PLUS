@@ -1,6 +1,19 @@
 import { Input } from "./InputStyles";
 
-const CampoInput = ({type, id, placeholder, value, autoComplete, onChange, required, $bg_color_input, $bg_hover_input   }) => {
+const CampoInput = (
+        {
+            type,
+            id,
+            placeholder,
+            value,
+            autoComplete,
+            onChange,
+            required,
+            $bg_color_input,
+            $bg_hover_input,
+            maxlength,
+            minlength
+        }) => {
     return (
         <Input 
             type={type} 
@@ -10,6 +23,8 @@ const CampoInput = ({type, id, placeholder, value, autoComplete, onChange, requi
             autoComplete={autoComplete} 
             onChange={onChange} 
             required={required}
+            maxlength={maxlength}
+            minlength={minlength}
             $bg_color_input={$bg_color_input}
             $bg_hover_input={$bg_hover_input}
         />

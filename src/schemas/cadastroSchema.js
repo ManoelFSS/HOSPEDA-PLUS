@@ -21,12 +21,12 @@ const formCadastroSchema = z.object({
     phone: z.string().min(14, { message: "O número de celular deve ter no mínimo 10 dígitos." }),
     dataNasc: z.string().min(10, { message: "A data de nascimento é obrigatória." }),
     rg: z.string().min(9, { message: "O RG deve ter no mínimo 9 caracteres." }),
-    cpf: z.string().min(11, { message: "O CPF deve ter no mínimo 11 caracteres." }),
+    cpf: z.string().length(11, "O CPF deve conter exatamente 11 dígitos numéricos"),
     email: emailSchema,
     password: passwordSchema,
     empresa: z.string().min(3, { message: "O nome da empresa é obrigatório." }),
-    cnpj: z.string().length(14, 'CNPJ deve ter 14 caracteres').optional() // Validação para o CNPJ, ajustado para 14 caracteres
+    cnpj: z.string().regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/, { message: "CNPJ deve estar no formato 11.111.111/1111-11" }), // Validação para o CNPJ, no formato correto
 });
 
 // Exportar o esquema de validação
-export const cadastroSchema = formCadastroSchema; 
+export const cadastroSchema = formCadastroSchema;

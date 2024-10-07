@@ -8,7 +8,7 @@ import {cadastroSchema} from "../../../schemas/cadastroSchema";
 const FormCadastro = ({toogleForm, setToogleForm}) => {
 
     const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
+    const [celular, setCelular] = useState('');
     const [dataNasc, setDataNasc] = useState('');
     const [rg, setRg] = useState('');
     const [cpf, setCpf] = useState('');
@@ -24,7 +24,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Corrigido o evento para 'e.preventDefault()'
-       
+
         const trimmedData = {
             name: name.trim(),
             phone: phone.trim(),
@@ -64,7 +64,8 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                 // Verificar se a resposta foi bem-sucedida
                 if (!response.ok) {
                     const errorData = await response.json();
-                    setError(errorData.message || 'Erro no registro');
+                    setError(errorData.message || 'Usuário ja registrado');
+                    console.log(errorData.message);
                     return;
                 }
 
@@ -87,12 +88,45 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
         }
     };
 
+    const handleCelularChange = (e) => {
+        let celularValue = e.target.value.replace(/\D/g, ""); // Remove tudo que não for número
     
-    // const [modal, setModal] = useState(false);
-    // const [textError, setTextError] = useState("");
-    // const [loading, setLoading] = useState(false);
-    // const [showPassword, setShowPassword] = useState(false);
+        // Limita a quantidade de números a 11 (padrão do celular no Brasil)
+        if (celularValue.length > 11) {
+            celularValue = celularValue.slice(0, 11);
+        }
+    
+        // Adiciona a formatação (XX) XXXXX-XXXX
+        if (celularValue.length >= 6) {
+            celularValue = celularValue.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3"); // Formato (XX) XXXXX-XXXX
+        } else if (celularValue.length >= 3) {
+            celularValue = celularValue.replace(/^(\d{2})(\d{0,4})$/, "($1) $2"); // Adiciona DDD e os primeiros números
+        } else if (celularValue.length > 0) {
+            celularValue = celularValue.replace(/^(\d{0,2})$/, "($1"); // Adiciona só o DDD
+        }
+    
+        setCelular(celularValue);
+    };
+    
 
+    const handleCnpjChange = (e) => {
+        const inputValue = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        const formattedValue = formatCnpj(inputValue);
+        setCnpj(formattedValue);
+    };
+
+    const formatCnpj = (value) => {
+        if (value.length <= 14) {
+            return value
+                .replace(/^(\d{2})(\d)/, '$1.$2') // Adiciona o primeiro ponto
+                .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3') // Adiciona o segundo ponto
+                .replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4') // Adiciona a barra
+                .replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5') // Adiciona o traço
+                .replace(/(\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}).*/, '$1'); // Limita o tamanho
+        }
+        return value;
+    };
+    
 
     return (
         <FormWrapper direction="true">
@@ -123,11 +157,13 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                             id="phone" 
                             placeholder="Ex: (99) 99999-9999"
                             autocomplete="tel"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
+                            value={celular}
+                            onChange={handleCelularChange}
                             required
                             $bg_color_input="var(--color-input-bg)"
                             $bg_hover_input="var(--color-input-bg-hover)"
+                            maxlength="14"
+                            minlength="14"
                         />
                     </div>
                     <div>
@@ -151,24 +187,37 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                         <CampoInput 
                             type="text" 
                             id="rg" 
+                            autocomplete="rg"
                             placeholder="Digite seu RG"
                             value={rg}
                             onChange={(e) => setRg(e.target.value)}
                             required
                             $bg_color_input="var(--color-input-bg)"
-                            $bg_hover_input="var(--color-input-bg-hover)"/>
+                            $bg_hover_input="var(--color-input-bg-hover)"
+                            maxlength="10"
+                            minlength="7"
+                        />
+                            
                     </div>
                     <div >
                         <label htmlFor="cpf">CPF</label>
                         <CampoInput 
-                            type="text" 
+                            type="number" 
                             id="cpf" 
                             placeholder="Digite seu CPF"
                             value={cpf}
-                            onChange={(e) => setCpf(e.target.value)}
+                            onChange={(e) => {
+                                // Remover qualquer caractere não numérico
+                                const cpfValue = e.target.value.replace(/\D/g, ""); // Substitui qualquer caractere que não seja número
+                                if (cpfValue.length <= 11) {
+                                  setCpf(cpfValue); // Limita a 11 dígitos
+                                }
+                            }}
                             required
                             $bg_color_input="var(--color-input-bg)"
                             $bg_hover_input="var(--color-input-bg-hover)"
+                            maxlength="11"
+                            minlength="11"
                         />
                     </div>
                 </div>
@@ -254,11 +303,13 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                         <CampoInput 
                             type="text" 
                             id="cnpj" 
-                            placeholder="Digite seu CNPJ"
+                            placeholder="00.000.000/0000-00"
                             value={cnpj}
-                            onChange={(e) => setCnpj(e.target.value)}
+                            onChange={handleCnpjChange}
                             $bg_color_input="var(--color-input-bg)"
                             $bg_hover_input="var(--color-input-bg-hover)"
+                            minlength="18"
+                            maxlength="18"
                         />
                     </div>
                 </div>

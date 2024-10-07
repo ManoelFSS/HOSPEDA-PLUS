@@ -32,6 +32,12 @@ export const Input = styled.input`
         background-color: rgba(255, 255, 255, 1) !important; 
     }
 
+    &[type="number"]::-webkit-outer-spin-button,
+    &[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
     &:hover {
         background-color: ${({ $bg_hover_input }) => $bg_hover_input };
     }

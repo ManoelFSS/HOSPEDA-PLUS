@@ -18,18 +18,19 @@ const Login = () => {
     return (
         <Container_login>
             <section className="box-left">
-                <Logo image={image} />
-                <h1>HOSPEDA PLUS</h1>
-                <p>Mais do que um Sistema</p>
-                <div className="icons">
-                    <FaWhatsapp className="whatsapp" onClick={() => window.open('https://wa.me/5574935050160', '_blank')} />
-                    <FaFacebook className="facebook" onClick={() => window.open('https://www.facebook.com/manoel.fernando.50', '_blank')} />
-                    <FaInstagram className="instagram" onClick={() => window.open('https://www.instagram.com/manoelfernandoplk/', '_blank')} />
+                <div>
+                    <Logo image={image} />
+                    <h1>HOSPEDA PLUS</h1>
+                    <p>Mais do que um Sistema</p>
+                    <div className="icons">
+                        <FaWhatsapp className="whatsapp" onClick={() => window.open('https://wa.me/5574935050160', '_blank')} />
+                        <FaFacebook className="facebook" onClick={() => window.open('https://www.facebook.com/manoel.fernando.50', '_blank')} />
+                        <FaInstagram className="instagram" onClick={() => window.open('https://www.instagram.com/manoelfernandoplk/', '_blank')} />
+                    </div>
                 </div>
+                <p className="copyright"> © 2024 Hospeda Plus.</p>
             </section>
             <section className="box-right">
-                <div className="espelhor">
-                </div>   
                 { toogleForm ? 
                     <LoginForm  
                         toogleForm={toogleForm} 
@@ -40,7 +41,6 @@ const Login = () => {
                         setToogleForm={setToogleForm}
                     />
                 } 
-                <p className="copyright"> © 2024 Hospeda Plus.</p>
             </section>
         </Container_login>
     )

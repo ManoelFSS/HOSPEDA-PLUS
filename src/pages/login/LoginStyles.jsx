@@ -9,18 +9,25 @@ import image_hotel05 from "../../assets/images/hotel05.jpg";
 
 export const Container_login = styled.section`
     display: flex;
-    height: 100svh;
+    min-height: 100svh;
+    width: 100%;
     background-color: #fff;
+
 
     .box-left {
         max-width: 300px;
         min-width: 280px;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        border: 1px solid black;
+        align-items: center;
+        width: 100%;
+        align-items: center;
         position: relative;
+        text-align: center;
+
+        div {
+            padding-bottom: 2.5rem ;
+        }
 
         h1 {
             font-size: 1.4rem;
@@ -34,6 +41,7 @@ export const Container_login = styled.section`
 
         .icons {
             display: flex;
+            justify-content: center;
             gap: 2rem;
             font-size: 2.2rem;
             padding: 0.5rem;
@@ -59,53 +67,10 @@ export const Container_login = styled.section`
                 color: #E1306C;
             }
         }
-    }
-
-    .box-right {
-        flex:1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;  
-        padding: 1rem 1rem 3rem;   
-        background: url(${image_hotel}) no-repeat right center / 100% 100% ; 
-        animation: fadeIn 30s ease infinite;
-
-        @keyframes fadeIn {
-            0%{
-                background: url(${image_hotel}) no-repeat right center / 100% 100% ; 
-            }
-            40% {
-                background: url(${image_hotel01}) no-repeat right center /100% 100% ; 
-            }
-            60% {
-                background: url(${image_hotel02}) no-repeat right center / 100% 100% ; 
-            }
-            80% {
-                background: url(${image_hotel03}) no-repeat right center / 100% 100% ; 
-            }
-            90% {
-                background: url(${image_hotel04}) no-repeat right center / 100% 100% ;
-            }
-            100% {
-                background: url(${image_hotel05}) no-repeat right center / 100% 100% ;
-            }
-        }
-
-        .espelhor {
-            position: absolute;
-            top:0;
-            left:0;
-            width:100%;
-            height: 100%;
-            z-index: 1;
-            background-color: rgba(0,0,0,0.6);
-        }
 
         .copyright {
             position: absolute;
             bottom: 0;
-            left:0;
             font-size: 0.8rem;
             color: #fff;
             font-weight: 100;
@@ -117,6 +82,40 @@ export const Container_login = styled.section`
             align-items: center;
             justify-content: center;
         }
+    }
+
+    .box-right {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        min-height: 100vh;
+        align-items: center;
+        position: relative;  
+        padding: 1rem 1rem 3rem;   
+        background: url(${image_hotel}) no-repeat right center / cover ; 
+        overflow: auto;
+        
+        @keyframes fadeIn {
+            0%{
+                background: url(${image_hotel}) no-repeat right center / cover ; 
+            }
+            40% {
+                background: url(${image_hotel01}) no-repeat right center / cover  ; 
+            }
+            60% {
+                background: url(${image_hotel02}) no-repeat right center / cover  ; 
+            }
+            80% {
+                background: url(${image_hotel03}) no-repeat right center / cover  ; 
+            }
+            90% {
+                background: url(${image_hotel04}) no-repeat right center /cover  ;
+            }
+            100% {
+                background: url(${image_hotel05}) no-repeat right center / cover ;
+            }
+        }
+
     }
 
     @media (max-width: 815px) {

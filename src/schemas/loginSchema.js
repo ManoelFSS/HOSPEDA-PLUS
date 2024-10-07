@@ -2,8 +2,8 @@ import { z } from "zod";
 
 // Defina seu esquema de validação
 const schema = z.object({
-    email: z.string().email(),
-    password: z.string()
+        email: z.string().email(),
+        password: z.string()
         .min(8, "A senha deve ter pelo menos 8 caracteres!")
         .regex(/[A-Z]/, "A senha deve conter pelo menos uma letra maiúscula (A, B, C, ...)")
         .regex(/[a-z]/, "A senha deve conter pelo menos uma letra minúscula (a, b, c, ...)")

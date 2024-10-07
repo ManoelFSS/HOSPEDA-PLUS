@@ -2,22 +2,92 @@ import React, { useState } from "react";
 import FormWrapper from "../formWrapper/FormWrapper"
 import CampoInput from "../../inputComponent/CampoInput";
 import Btn from "../../btn/Btn";
+import {cadastroSchema} from "../../../schemas/cadastroSchema";
 
 
 const FormCadastro = ({toogleForm, setToogleForm}) => {
 
-    const [password, setPassword] = useState("");
-    const [password2, setPassword2] = useState("");
-    const [email, setEmail] = useState("");
-    const [email2, setEmail2] = useState("");
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
-    const [empresa, setEmpresa] = useState("");
-    const [cpf, setCpf] = useState("");
-    const [rg, setRg] = useState("");
-    const [cnpj, setCnpj] = useState("");
-    const [dataNasc, setDataNasc] = useState("");
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [dataNasc, setDataNasc] = useState('');
+    const [rg, setRg] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [email, setEmail] = useState('');
+    const [email2, setEmail2] = useState('');
+    const [password, setPassword] = useState('');
+    const [password2, setPassword2] = useState('');
+    const [empresa, setEmpresa] = useState('');
+    const [cnpj, setCnpj] = useState('');
+    const [loading, setLoading] = useState(false); // Adicione esta linha
+    const [error, setError] = useState(''); // Para gerenciar mensagens de erro
+    const [successMessage, setSuccessMessage] = useState(''); // Para mensagens de sucesso
 
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Corrigido o evento para 'e.preventDefault()'
+       
+        const trimmedData = {
+            name: name.trim(),
+            phone: phone.trim(),
+            dataNasc: dataNasc.trim(),
+            rg: rg.trim(),
+            cpf: cpf.trim(),
+            email: email.trim().toLowerCase(),
+            email2: email2.trim().toLowerCase(),
+            password: password.trim(),
+            password2: password2.trim(),
+            empresa: empresa.trim(),
+            cnpj: cnpj.trim(),
+        };
+
+        // Validação
+        const result = cadastroSchema.safeParse(trimmedData);
+        if (!result.success) {
+            console.log(result.error.errors); // Exibe os erros de validação
+            setError(result.error.errors[0].message);
+            return;
+        }
+
+        try {
+            setLoading(true); // Iniciar o carregamento
+            
+            if (trimmedData.email === trimmedData.email2 && trimmedData.password === trimmedData.password2) {
+                console.log("Email e senha correspondem");
+                // Enviar a requisição para a API
+                const response = await fetch('https://hospeda-back-end-production.up.railway.app/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(trimmedData), // Corrigido para usar trimmedData
+                });
+
+                // Verificar se a resposta foi bem-sucedida
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    setError(errorData.message || 'Erro no registro');
+                    return;
+                }
+
+                // Sucesso no registro
+                console.log("Registro realizado com sucesso!");
+                setSuccessMessage('Registro realizado com sucesso!');
+                setError(''); // Limpa qualquer mensagem de erro anterior
+            }else{
+                setError('Email ou senha não correspondem');
+                console.log("Email ou senha não correspondem");
+                return
+            }
+
+        } catch (err) {
+            console.log("Erro ao realizar o registro:", err);
+            setError(err.message || 'Erro inesperado');
+        } finally {
+            setLoading(false); // Finalizar o carregamento
+            // console.log(localStorage.getItem('token'));
+        }
+    };
+
+    
     // const [modal, setModal] = useState(false);
     // const [textError, setTextError] = useState("");
     // const [loading, setLoading] = useState(false);
@@ -26,7 +96,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
 
     return (
         <FormWrapper direction="true">
-            <form action="">
+            <form onSubmit={handleSubmit}>
                 <h2>Crie sua conta</h2>
 
                 <div className="input-field">
@@ -37,7 +107,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                             id="fullname" 
                             placeholder="Nome Completo"
                             value={name}
-                            onChange={(e) => setName(e.target.value.trim())}
+                            onChange={(e) => setName(e.target.value)}
                             required
                             $bg_color_input="var(--color-input-bg)"
                             $bg_hover_input="var(--color-input-bg-hover)"
@@ -54,7 +124,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                             placeholder="Ex: (99) 99999-9999"
                             autocomplete="tel"
                             value={phone}
-                            onChange={(e) => setPhone(e.target.value.trim())}
+                            onChange={(e) => setPhone(e.target.value)}
                             required
                             $bg_color_input="var(--color-input-bg)"
                             $bg_hover_input="var(--color-input-bg-hover)"
@@ -65,9 +135,9 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                         <CampoInput 
                             type="date" 
                             id="birthday" 
-                            placeholder="Data de Nascimento"
+                            placeholder="dd/mm/aaaa"
                             value={dataNasc}
-                            onChange={(e) => setDataNasc(e.target.value.trim())}
+                            onChange={(e) => setDataNasc(e.target.value)}
                             required
                             $bg_color_input="var(--color-input-bg)"
                             $bg_hover_input="var(--color-input-bg-hover)"
@@ -83,7 +153,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                             id="rg" 
                             placeholder="Digite seu RG"
                             value={rg}
-                            onChange={(e) => setRg(e.target.value.trim())}
+                            onChange={(e) => setRg(e.target.value)}
                             required
                             $bg_color_input="var(--color-input-bg)"
                             $bg_hover_input="var(--color-input-bg-hover)"/>
@@ -95,7 +165,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                             id="cpf" 
                             placeholder="Digite seu CPF"
                             value={cpf}
-                            onChange={(e) => setCpf(e.target.value.trim())}
+                            onChange={(e) => setCpf(e.target.value)}
                             required
                             $bg_color_input="var(--color-input-bg)"
                             $bg_hover_input="var(--color-input-bg-hover)"
@@ -111,7 +181,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                             id="email" 
                             placeholder="digite seu e-mail"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value.trim().toLowerCase())} 
+                            onChange={(e) => setEmail(e.target.value)} 
                             required
                             autoComplete="email"
                             $bg_color_input="var(--color-input-bg)"
@@ -125,7 +195,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                             id="email2"
                             placeholder="Confirme seu e-mail"
                             value={email2}
-                            onChange={(e) => setEmail2(e.target.value.trim().toLowerCase())} 
+                            onChange={(e) => setEmail2(e.target.value)} // Atualizando corretamente
                             required
                             autoComplete="email"
                             $bg_color_input="var(--color-input-bg)"
@@ -143,7 +213,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                             placeholder="Digite sua senha"
                             value={password}
                             autoComplete="current-password" 
-                            onChange={(e) => setPassword(e.target.value.trim())}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                             $bg_color_input="var(--color-input-bg)"
                             $bg_hover_input="var(--color-input-bg-hover)"
@@ -157,7 +227,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                             placeholder="Confirme sua senha"
                             value={password2}
                             autoComplete="current-password" 
-                            onChange={(e) => setPassword2(e.target.value.trim())}
+                            onChange={(e) => setPassword2(e.target.value)}
                             required
                             $bg_color_input="var(--color-input-bg)"
                             $bg_hover_input="var(--color-input-bg-hover)"
@@ -173,7 +243,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                             id="empresaname" 
                             placeholder="Digite o nome da sua empresa"
                             value={empresa}
-                            onChange={(e) => setEmpresa(e.target.value.trim())}
+                            onChange={(e) => setEmpresa(e.target.value)}
                             required
                             $bg_color_input="var(--color-input-bg)"
                             $bg_hover_input="var(--color-input-bg-hover)"
@@ -186,7 +256,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                             id="cnpj" 
                             placeholder="Digite seu CNPJ"
                             value={cnpj}
-                            onChange={(e) => setCnpj(e.target.value.trim())}
+                            onChange={(e) => setCnpj(e.target.value)}
                             $bg_color_input="var(--color-input-bg)"
                             $bg_hover_input="var(--color-input-bg-hover)"
                         />

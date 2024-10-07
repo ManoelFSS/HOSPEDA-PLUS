@@ -7,6 +7,16 @@
 }
 
 :root {
+
+  --color-modal-error-message: rgb(243, 0, 0);
+  --color-modal-error-bg: rgb(255, 255, 255);
+
+  --color-primary-bg: rgb(255, 255, 255);
+  --color-secondary-bg: rgb(0, 0, 0);
+
+  --color-trasparent-white-bg: rgba(255, 255, 255, 0.5);
+  --color-trasparent-Black-bg: rgba(0, 0, 0, 0.7);
+
   --color-primary-btn-bg: rgba(243, 174, 0, 0.7);
   --color-primary-btn-bg-hover: rgba(243, 174, 0, 1);
 

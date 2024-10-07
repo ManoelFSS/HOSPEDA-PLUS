@@ -27,9 +27,7 @@ export const AuthProvider = ({ children }) => {
 
             // Verifique se a resposta é ok (status 200-299)
             if (!response.ok) {
-                const errorData = await response.json();
-                // Retorna erro se não for bem-sucedido
-                throw new Error(errorData.message || 'Erro no login');
+                return false;
             }
 
             const data = await response.json();

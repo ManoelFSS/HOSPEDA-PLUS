@@ -11,7 +11,7 @@ export const Input = styled.input`
     background-color: ${({ $bg_color_input }) => $bg_color_input };
     box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.8);
     color: #000;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     
 

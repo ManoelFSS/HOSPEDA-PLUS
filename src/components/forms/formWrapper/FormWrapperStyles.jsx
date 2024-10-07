@@ -2,13 +2,12 @@ import styled from "styled-components";
 
 export const Container = styled.div`
 
-    display: flex;
-    flex-direction: column;
-    padding: 15px 25px 40px;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 6px;
+    padding: 20px 30px 40px;
     position: relative;
-    z-index: 9;
+    max-width: 600px;
+    z-index: 10;
 
     h2 {
         font-size: 1.5rem;
@@ -19,11 +18,10 @@ export const Container = styled.div`
 
     .input-field {
         display: flex;
-        width: 100%;
         flex-direction: ${({ $direction }) => $direction === "true" ? "Row" : "Column"};
         position: relative;
-
-        // gap: ${({ $direction }) => $direction === "true" ? "15px" : "0px"};
+        width: 100%;
+        gap: 20px;
 
         .eye {
             position: absolute;
@@ -40,7 +38,7 @@ export const Container = styled.div`
         }
 
         label {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bolder;
             padding:  5px 0px;
             color: #000;
@@ -50,20 +48,13 @@ export const Container = styled.div`
             display: flex;
             width: 100%;
             flex-direction: ${({ $direction }) => $direction === "true" ? "column " : "row"};
-            margin: 0px 15px 0px 0px;
+            // margin: 0px 15px 0px 15px;
         }
 
         @media (max-width: 535px) {
             flex-direction: column;
+            width: 100%;
             margin: 0;
-        }
-
-        @media (max-width: 390px) {
-            min-width: 270px;
-        }
-
-        @media (max-width: 341px) {
-            min-width: 100%;
         }
 
     }
@@ -99,6 +90,10 @@ export const Container = styled.div`
         &:hover {
             background-color: rgba(255, 255, 255, 1);
         }
+    }
+
+    @media (max-width: 535px) {
+        width: 100%;
     }
 
 `

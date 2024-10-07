@@ -38,7 +38,7 @@ export const Container = styled.div`
         }
 
         label {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: bolder;
             padding:  5px 0px;
             color: #000;

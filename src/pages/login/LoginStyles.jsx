@@ -12,7 +12,7 @@ export const Container_login = styled.section`
     min-height: 100svh;
     width: 100%;
     background-color: #fff;
-
+    position: relative;
 
     .box-left {
         max-width: 300px;
@@ -26,7 +26,7 @@ export const Container_login = styled.section`
         text-align: center;
 
         div {
-            padding-bottom: 2.5rem ;
+            padding-bottom: 2.5rem;
         }
 
         h1 {
@@ -85,13 +85,11 @@ export const Container_login = styled.section`
     }
 
     .box-right {
+        flex:1;
         display: flex;
         justify-content: center;
-        width: 100%;
-        min-height: 100vh;
         align-items: center;
-        position: relative;  
-        padding: 1rem 1rem 3rem;   
+        padding: 1rem ;   
         background: url(${image_hotel}) no-repeat right center / cover ; 
         overflow: auto;
         

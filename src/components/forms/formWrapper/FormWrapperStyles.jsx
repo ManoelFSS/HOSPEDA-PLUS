@@ -20,8 +20,8 @@ export const Container = styled.div`
         display: flex;
         flex-direction: ${({ $direction }) => $direction === "true" ? "Row" : "Column"};
         position: relative;
-        width: 100%;
-        gap: 20px;
+        min-width: 300px;
+        gap:${({ $direction }) => $direction === "true" ? "10px" : "0px"};
 
         .eye {
             position: absolute;
@@ -53,7 +53,7 @@ export const Container = styled.div`
 
         @media (max-width: 535px) {
             flex-direction: column;
-            width: 100%;
+            min-width: 100%;
             margin: 0;
         }
 

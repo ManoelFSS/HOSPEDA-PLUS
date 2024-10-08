@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import validator from 'validator';
+
 import { validateLoginSchema } from "../../../schemas/loginSchema.js";
 // components
-import { Container_formLogin } from "./LoginFormStyles";
 import Modal from "../../modal/Modal";
 import { useAuth } from "../../../contexts/AuthContext";
 import Loader from "../../load/Load.jsx";

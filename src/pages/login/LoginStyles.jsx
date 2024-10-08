@@ -89,9 +89,10 @@ export const Container_login = styled.section`
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 1rem ;   
+        padding: 0.5rem ;   
         overflow: auto;
         animation: fadeIn 40s 1s infinite;
+        background: url(${image_hotel}) no-repeat right center / cover ; 
         
         @keyframes fadeIn {
             0%, 20%{

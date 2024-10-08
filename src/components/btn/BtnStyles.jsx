@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Button = styled.input`
     width: ${({ $width }) => $width || "auto"};
     text-align: center;
-    height: 40px;
+    height: 35px;
     padding: 0 20px;
     border-radius: 5px;
     border: none;

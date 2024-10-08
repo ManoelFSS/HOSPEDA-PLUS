@@ -13,21 +13,21 @@ const emailSchema = z.string().email({ message: "Formato de email inválido." })
     const domain = email.split('@')[1];
     const allowedDomains = ['gmail.com', 'yahoo.com', 'hotmail.com'];
     return allowedDomains.includes(domain);
-}, { message: "Use um email dos seguintes domínios: gmail.com, yahoo.com, hotmail.com." });
+}, { message: "Ops!, E-mail temporario não pode ser usado." });
 
 // Validação do restante do formulário
 const formCadastroSchema = z.object({
-    name: z.string().min(3, { message: "O nome é obrigatório." }),
-    phone: z.string().min(14, { message: "O número de celular deve ter no mínimo 10 dígitos." }),
+    name: z.string().min(2, { message: "O nome é obrigatório deve conter pelo menos 2 caracteres. Ex: Jó" }),
+    phone: z.string().min(14, { message: "O número de celular deve ter o formato (xx)9XXXX-XXXX" }),
     dataNasc: z.string().min(10, { message: "A data de nascimento é obrigatória." }),
     rg: z.string().min(9, { message: "O RG deve ter no mínimo 9 caracteres." }),
-    cpf: z.string().length(11, { message: "O CPF deve ter exatamente 11 caracteres." }), // Ajustado para ser exatamente 11 dígitos
-    email: z.string().email({ message: 'Email inválido' }),
-    password: z.string().min(8, { message: 'Senha deve ter no mínimo 8 caracteres' }),
+    cpf: z.string().length(11, { message: "O CPF deve ter exatamente 11 caracteres numericos." }), // Ajustado para ser exatamente 11 dígitos
+    email:emailSchema,
+    password:passwordSchema,
     empresa: z.string().min(3, { message: 'Nome da empresa é obrigatório' }), // Validação para o nome da empresa
     cnpj: z.string()
-          .length(18, { message: 'CNPJ deve ter 18 caracteres' }) // Mantém a verificação para 18 caracteres
-          .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/, { message: "CNPJ deve estar no formato 11.111.111/1111-11" }) // Regex para formato do CNPJ
+          .length(18, { message: 'CNPJ deve ter 18 caracteres Ex: 00.000.000/0000-00' }) // Mantém a verificação para 18 caracteres
+          .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/, { message: "CNPJ deve estar no formato 00.000.000/0000-00" }) // Regex para formato do CNPJ
           .optional() // Deixa o campo CNPJ opcional, caso não seja obrigatório
 });
 

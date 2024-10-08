@@ -4,9 +4,9 @@ export const Container = styled.div`
 
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 6px;
-    padding: 20px 30px 40px;
+    padding: 10px 30px 30px;
     position: relative;
-    max-width: 600px;
+    max-width: 700px;
     z-index: 10;
 
     h2 {
@@ -25,7 +25,7 @@ export const Container = styled.div`
 
         .eye {
             position: absolute;
-            bottom:7px;
+            bottom:10px;
             right: 10px;
             font-size: 1.1rem;
             cursor: pointer;
@@ -48,7 +48,7 @@ export const Container = styled.div`
             display: flex;
             width: 100%;
             flex-direction: ${({ $direction }) => $direction === "true" ? "column " : "row"};
-            // margin: 0px 15px 0px 15px;
+            position: relative;
         }
 
         @media (max-width: 535px) {

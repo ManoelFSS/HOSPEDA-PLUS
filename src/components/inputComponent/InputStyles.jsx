@@ -17,7 +17,7 @@ export const Input = styled.input`
 
     &::placeholder {
         color: #000;
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     &:active,

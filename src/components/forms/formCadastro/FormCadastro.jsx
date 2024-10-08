@@ -6,12 +6,17 @@ import {cadastroSchema} from "../../../schemas/cadastroSchema";
 import Modal from "../../modal/Modal";
 import { useAuth } from "../../../contexts/AuthContext";
 import Loader from "../../load/Load";
-
 //icones
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+//imeges
+import ImgAprov from "../../../assets/images/tudocerto.png";
+
+
 
 
 const FormCadastro = ({toogleForm, setToogleForm}) => {
+
+    const { loginUser } = useAuth();// provedor de contexto
 
     const [name, setName] = useState('');
     const [celular, setCelular] = useState('');
@@ -26,7 +31,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
     const [cnpj, setCnpj] = useState('');
     const [loading, setLoading] = useState(false); // Adicione esta linha
     const [error, setError] = useState(''); // Para gerenciar mensagens de erro
-    const [successMessage, setSuccessMessage] = useState(''); // Para mensagens de sucesso
+    const [cadSucess, setCadSucess] = useState(true); //abrir card de cadastro bem sucedido
     const [visbilePassword, setVisbilePassword] = useState(false);
     const [modal, setModal] = useState(false);
 
@@ -46,6 +51,10 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
             empresa: empresa.trim(),
             cnpj: cnpj.trim(),
         };
+
+        setName(trimmedData.name);
+        setEmail(trimmedData.email);
+        setPassword(trimmedData.password);
 
         // Validação
         const result = cadastroSchema.safeParse(trimmedData);
@@ -81,7 +90,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
 
                 // Sucesso no registro
                 console.log("Registro realizado com sucesso!");
-                setSuccessMessage('Registro realizado com sucesso!');
+                setCadSucess(false);
                 setError(''); // Limpa qualquer mensagem de erro anterior
             }else{
                 setError('Email ou senha não correspondem');
@@ -140,223 +149,250 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
         }
         return value;
     };
+
+    const hendleLogin = async () => {
+        const sucesse = await loginUser( email, password);
+        console.log(sucesse);
+        if(sucesse.PromiseResult === true){
+            console.log("Login bem-sucedido");
+        }else{
+            console.log("Email ou senha não correspondem");
+            setToogleForm(!toogleForm)
+        }
+    }
     
 
     return (
         <>
-            <FormWrapper direction="true">
-                <form onSubmit={handleSubmit}>
-                    <h2>Crie sua conta</h2>
+            { cadSucess ?
+                <FormWrapper direction="true">
+                    <form onSubmit={handleSubmit}>
+                        <h2>Crie sua conta</h2>
 
-                    <div className="input-field">
-                        <div>
-                            <label htmlFor="fullname">Nome Completo</label>
-                            <CampoInput 
-                                type="text" 
-                                id="fullname" 
-                                placeholder="Nome Completo"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                                $bg_color_input="var(--color-input-bg)"
-                                $bg_hover_input="var(--color-input-bg-hover)"
-                            />
+                        <div className="input-field">
+                            <div>
+                                <label htmlFor="fullname">Nome Completo</label>
+                                <CampoInput 
+                                    type="text" 
+                                    id="fullname" 
+                                    placeholder="Nome Completo"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                    $bg_color_input="var(--color-input-bg)"
+                                    $bg_hover_input="var(--color-input-bg-hover)"
+                                />
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="input-field">
-                        <div>
-                            <label htmlFor="phone">Celular</label>
-                            <CampoInput 
-                                type="text" 
-                                id="phone" 
-                                placeholder="Ex: (99) 99999-9999"
-                                autocomplete="tel"
-                                value={celular}
-                                onChange={handleCelularChange}
-                                required
-                                $bg_color_input="var(--color-input-bg)"
-                                $bg_hover_input="var(--color-input-bg-hover)"
-                                maxlength="14"
-                                minlength="14"
-                            />
+                        <div className="input-field">
+                            <div>
+                                <label htmlFor="phone">Celular</label>
+                                <CampoInput 
+                                    type="text" 
+                                    id="phone" 
+                                    placeholder="Ex: (99) 99999-9999"
+                                    autocomplete="tel"
+                                    value={celular}
+                                    onChange={handleCelularChange}
+                                    required
+                                    $bg_color_input="var(--color-input-bg)"
+                                    $bg_hover_input="var(--color-input-bg-hover)"
+                                    maxlength="14"
+                                    minlength="14"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="birthday">Data de Nascimento</label>
+                                <CampoInput 
+                                    type="date" 
+                                    id="birthday" 
+                                    placeholder="dd/mm/aaaa"
+                                    value={dataNasc}
+                                    onChange={(e) => setDataNasc(e.target.value)}
+                                    required
+                                    $bg_color_input="var(--color-input-bg)"
+                                    $bg_hover_input="var(--color-input-bg-hover)"
+                                />
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="birthday">Data de Nascimento</label>
-                            <CampoInput 
-                                type="date" 
-                                id="birthday" 
-                                placeholder="dd/mm/aaaa"
-                                value={dataNasc}
-                                onChange={(e) => setDataNasc(e.target.value)}
-                                required
-                                $bg_color_input="var(--color-input-bg)"
-                                $bg_hover_input="var(--color-input-bg-hover)"
-                            />
-                        </div>
-                    </div>
 
-                    <div className="input-field"> 
-                        <div>
-                            <label htmlFor="rg">RG</label>
-                            <CampoInput 
-                                type="text" 
-                                id="rg" 
-                                autocomplete="rg"
-                                placeholder="Digite seu RG"
-                                value={rg}
-                                onChange={(e) => setRg(e.target.value)}
-                                required
-                                $bg_color_input="var(--color-input-bg)"
-                                $bg_hover_input="var(--color-input-bg-hover)"
-                                maxlength="10"
-                                minlength="7"
-                            />
-                                
+                        <div className="input-field"> 
+                            <div>
+                                <label htmlFor="rg">RG</label>
+                                <CampoInput 
+                                    type="text" 
+                                    id="rg" 
+                                    autocomplete="rg"
+                                    placeholder="Digite seu RG"
+                                    value={rg}
+                                    onChange={(e) => setRg(e.target.value)}
+                                    required
+                                    $bg_color_input="var(--color-input-bg)"
+                                    $bg_hover_input="var(--color-input-bg-hover)"
+                                    maxlength="10"
+                                    minlength="7"
+                                />
+                                    
+                            </div>
+                            <div >
+                                <label htmlFor="cpf">CPF</label>
+                                <CampoInput 
+                                    type="number" 
+                                    id="cpf" 
+                                    placeholder="Digite seu CPF"
+                                    value={cpf}
+                                    onChange={(e) => {
+                                        // Remover qualquer caractere não numérico
+                                        const cpfValue = e.target.value.replace(/\D/g, ""); // Substitui qualquer caractere que não seja número
+                                        if (cpfValue.length <= 11) {
+                                        setCpf(cpfValue); // Limita a 11 dígitos
+                                        }
+                                    }}
+                                    required
+                                    $bg_color_input="var(--color-input-bg)"
+                                    $bg_hover_input="var(--color-input-bg-hover)"
+                                    maxlength="11"
+                                    minlength="11"
+                                />
+                            </div>
                         </div>
-                        <div >
-                            <label htmlFor="cpf">CPF</label>
-                            <CampoInput 
-                                type="number" 
-                                id="cpf" 
-                                placeholder="Digite seu CPF"
-                                value={cpf}
-                                onChange={(e) => {
-                                    // Remover qualquer caractere não numérico
-                                    const cpfValue = e.target.value.replace(/\D/g, ""); // Substitui qualquer caractere que não seja número
-                                    if (cpfValue.length <= 11) {
-                                    setCpf(cpfValue); // Limita a 11 dígitos
-                                    }
-                                }}
-                                required
-                                $bg_color_input="var(--color-input-bg)"
-                                $bg_hover_input="var(--color-input-bg-hover)"
-                                maxlength="11"
-                                minlength="11"
-                            />
-                        </div>
-                    </div>
 
-                    <div className="input-field">
-                        <div>
-                            <label htmlFor="email">E-mail</label>
-                            <CampoInput 
-                                type="email" 
-                                id="email" 
-                                placeholder="digite seu e-mail"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)} 
-                                required
-                                autoComplete="email"
-                                $bg_color_input="var(--color-input-bg)"
-                                $bg_hover_input="var(--color-input-bg-hover)"
-                            />
+                        <div className="input-field">
+                            <div>
+                                <label htmlFor="email">E-mail</label>
+                                <CampoInput 
+                                    type="email" 
+                                    id="email" 
+                                    placeholder="digite seu e-mail"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)} 
+                                    required
+                                    autoComplete="email"
+                                    $bg_color_input="var(--color-input-bg)"
+                                    $bg_hover_input="var(--color-input-bg-hover)"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="email2">Confirmar E-mail </label>
+                                <CampoInput 
+                                    type="email" 
+                                    id="email2"
+                                    placeholder="Confirme seu e-mail"
+                                    value={email2}
+                                    onChange={(e) => setEmail2(e.target.value)} // Atualizando corretamente
+                                    required
+                                    autoComplete="email"
+                                    $bg_color_input="var(--color-input-bg)"
+                                    $bg_hover_input="var(--color-input-bg-hover)"
+                                />
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="email2">Confirmar E-mail </label>
-                            <CampoInput 
-                                type="email" 
-                                id="email2"
-                                placeholder="Confirme seu e-mail"
-                                value={email2}
-                                onChange={(e) => setEmail2(e.target.value)} // Atualizando corretamente
-                                required
-                                autoComplete="email"
-                                $bg_color_input="var(--color-input-bg)"
-                                $bg_hover_input="var(--color-input-bg-hover)"
-                            />
-                        </div>
-                    </div>
 
-                    <div className="input-field">
-                        <div>
-                            <label htmlFor="password">Senha</label>
-                            <CampoInput 
-                                type={visbilePassword ? "text" : "password"} 
-                                id="password" 
-                                placeholder="Digite sua senha"
-                                value={password}
-                                autoComplete="current-password" 
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                                $bg_color_input="var(--color-input-bg)"
-                                $bg_hover_input="var(--color-input-bg-hover)"
-                            />
-                            {visbilePassword ? (
-                                <FaEye className="eye" onClick={() => setVisbilePassword(!visbilePassword)} />
-                            ) : (
-                                <FaEyeSlash className="eye" onClick={() => setVisbilePassword(!visbilePassword)} />
-                            )}
+                        <div className="input-field">
+                            <div>
+                                <label htmlFor="password">Senha</label>
+                                <CampoInput 
+                                    type={visbilePassword ? "text" : "password"} 
+                                    id="password" 
+                                    placeholder="Digite sua senha"
+                                    value={password}
+                                    autoComplete="current-password" 
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    $bg_color_input="var(--color-input-bg)"
+                                    $bg_hover_input="var(--color-input-bg-hover)"
+                                />
+                                {visbilePassword ? (
+                                    <FaEye className="eye" onClick={() => setVisbilePassword(!visbilePassword)} />
+                                ) : (
+                                    <FaEyeSlash className="eye" onClick={() => setVisbilePassword(!visbilePassword)} />
+                                )}
+                            </div>
+                            <div>
+                                <label htmlFor="password2">Confirmar Senha</label>
+                                <CampoInput 
+                                    type={visbilePassword ? "text" : "password"} 
+                                    id="password2" 
+                                    placeholder="Confirme sua senha"
+                                    value={password2}
+                                    autoComplete="current-password" 
+                                    onChange={(e) => setPassword2(e.target.value)}
+                                    required
+                                    $bg_color_input="var(--color-input-bg)"
+                                    $bg_hover_input="var(--color-input-bg-hover)"
+                                />
+                                {visbilePassword ? (
+                                    <FaEye className="eye" onClick={() => setVisbilePassword(!visbilePassword)} />
+                                ) : (
+                                    <FaEyeSlash className="eye" onClick={() => setVisbilePassword(!visbilePassword)} />
+                                )}
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="password2">Confirmar Senha</label>
-                            <CampoInput 
-                                type={visbilePassword ? "text" : "password"} 
-                                id="password2" 
-                                placeholder="Confirme sua senha"
-                                value={password2}
-                                autoComplete="current-password" 
-                                onChange={(e) => setPassword2(e.target.value)}
-                                required
-                                $bg_color_input="var(--color-input-bg)"
-                                $bg_hover_input="var(--color-input-bg-hover)"
-                            />
-                            {visbilePassword ? (
-                                <FaEye className="eye" onClick={() => setVisbilePassword(!visbilePassword)} />
-                            ) : (
-                                <FaEyeSlash className="eye" onClick={() => setVisbilePassword(!visbilePassword)} />
-                            )}
-                        </div>
-                    </div>
 
-                    <div className="input-field">
-                        <div>
-                            <label htmlFor="empresaname">Nome da Empresa</label>
-                            <CampoInput 
-                                type="text" 
-                                id="empresaname" 
-                                placeholder="Digite o Nome"
-                                value={empresa}
-                                onChange={(e) => setEmpresa(e.target.value)}
-                                required
-                                $bg_color_input="var(--color-input-bg)"
-                                $bg_hover_input="var(--color-input-bg-hover)"
-                            />
+                        <div className="input-field">
+                            <div>
+                                <label htmlFor="empresaname">Nome da Empresa</label>
+                                <CampoInput 
+                                    type="text" 
+                                    id="empresaname" 
+                                    placeholder="Digite o Nome"
+                                    value={empresa}
+                                    onChange={(e) => setEmpresa(e.target.value)}
+                                    required
+                                    $bg_color_input="var(--color-input-bg)"
+                                    $bg_hover_input="var(--color-input-bg-hover)"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="cnpj">CNPJ</label>
+                                <CampoInput 
+                                    type="text" 
+                                    id="cnpj" 
+                                    placeholder="00.000.000/0000-00"
+                                    value={cnpj}
+                                    onChange={handleCnpjChange}
+                                    $bg_color_input="var(--color-input-bg)"
+                                    $bg_hover_input="var(--color-input-bg-hover)"
+                                    minlength="18"
+                                    maxlength="18"
+                                />
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="cnpj">CNPJ</label>
-                            <CampoInput 
-                                type="text" 
-                                id="cnpj" 
-                                placeholder="00.000.000/0000-00"
-                                value={cnpj}
-                                onChange={handleCnpjChange}
-                                $bg_color_input="var(--color-input-bg)"
-                                $bg_hover_input="var(--color-input-bg-hover)"
-                                minlength="18"
-                                maxlength="18"
-                            />
-                        </div>
-                    </div>
-                
+                    
+                        <Btn 
+                            type="submit" 
+                            value="Cadastrar" 
+                            $width="100%" 
+                            $bg_color="var(--color-primary-btn-bg)"
+                            $bg_hover="var(--color-primary-btn-bg-hover)"
+                        />
+                        
+                    </form>
                     <Btn 
-                        type="submit" 
-                        value="Cadastrar" 
-                        $width="100%" 
+                        type="button"
+                        value="Ja tenho conta" 
+                        $width="100%"
+                        $bg_color="var(--color-secondary-btn-bg)"
+                        $bg_hover="var(--color-secondary-btn-bg-hover)"
+                        onClick={() => setToogleForm(!toogleForm)}
+                    />
+                </FormWrapper> :
+                <FormWrapper directionText="true" >
+                    <img src={ImgAprov} alt="visto de tudo certo!" />
+                    <h2>Tudo certo!</h2>
+                    <p>{name.split(" ")[0]} Seu cadastro foi realizado com sucesso!</p>
+                    <p>Você agora tem acesso ao sistema de gerenciamento do <span>Hospeda Plus.</span></p>
+                    <Btn
+                        type="button"
+                        value="Acessar o Painel" 
+                        $width="100%"
                         $bg_color="var(--color-primary-btn-bg)"
                         $bg_hover="var(--color-primary-btn-bg-hover)"
+                        onClick={() => hendleLogin()}
                     />
-                    
-                </form>
-                <Btn 
-                    type="button"
-                    value="Ja tenho conta" 
-                    $width="100%"
-                    $bg_color="var(--color-secondary-btn-bg)"
-                    $bg_hover="var(--color-secondary-btn-bg-hover)"
-                    onClick={() => setToogleForm(!toogleForm)}
-                />
-            </FormWrapper>
+                </FormWrapper>
+            }
             <Modal 
                 setModal={setModal}
                 modal={modal}

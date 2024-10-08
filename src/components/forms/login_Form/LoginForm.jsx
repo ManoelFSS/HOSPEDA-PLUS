@@ -81,7 +81,6 @@ const LoginForm = ({setToogleForm, toogleForm}) => {
     return (
         <>
             <FormWrapper>
-                { loading && <Loader />}
                 <h2>Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="input-field">
@@ -135,6 +134,7 @@ const LoginForm = ({setToogleForm, toogleForm}) => {
                     $bg_hover="var(--color-secondary-btn-bg-hover)"
                     onClick={() => setToogleForm(!toogleForm)}
                 />
+                { loading && <Loader />}
             </FormWrapper> 
             <Modal 
                 setModal={setModal}

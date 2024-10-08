@@ -1,8 +1,8 @@
 import { Container } from "./FormWrapperStyles"
 
-const FormWrapper = ({ children, direction }) => {
+const FormWrapper = ({ children, direction, directionText }) => {
     return (
-        <Container $direction={direction}>
+        <Container $direction={direction} $directionText={directionText}>
             {children}
         </Container>
     )

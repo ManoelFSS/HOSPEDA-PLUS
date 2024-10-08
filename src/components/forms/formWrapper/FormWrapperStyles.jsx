@@ -8,9 +8,21 @@ export const Container = styled.div`
     position: relative;
     max-width: 700px;
     z-index: 10;
+    text-align: ${({ $directionText }) => $directionText === "true" ? "center" : "left"};
+    
+    img {
+        width: 100px;
+    }
+
+    span {
+        font-size: 1.2rem;
+        font-weight: bolder;
+        color: var( --color-primary-text) ;
+        padding: 0px 5px;
+    }
 
     h2 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: bolder;
         color: #000;
         text-align: center;
@@ -38,7 +50,7 @@ export const Container = styled.div`
         }
 
         label {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bolder;
             padding:  5px 0px;
             color: #000;
@@ -62,15 +74,17 @@ export const Container = styled.div`
     p {
         font-size: 1rem;
         font-weight: bolder;
-        cursor: pointer;
+        cursor: ${({ $directionText }) => $directionText === "true" ? "none" : "pointer"};
         trasition: all 0.3s;
         text-align: right;
         color: #000;
         padding: 8px 0 0;
         trasition: all 0.3s;
+        text-align: ${({ $directionText }) => $directionText === "true" ? "center" : "left"};
 
         &:hover {
-            text-decoration: underline;
+            text-decoration: ${({ $directionText }) => $directionText === "true" ? "none" : "underline"};
+
         }
     }
 

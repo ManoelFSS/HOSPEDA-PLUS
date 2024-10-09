@@ -10,6 +10,7 @@ import Loader from "../../load/Load";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 //imeges
 import ImgAprov from "../../../assets/images/tudocerto.png";
+import { set } from "mongoose";
 
 
 
@@ -36,6 +37,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
     const [modal, setModal] = useState(false);
 
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault(); // Corrigido o evento para 'e.preventDefault()'
 
         const trimmedData = {
@@ -61,7 +63,12 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
         if (!result.success) {
             console.log(result.error.errors); // Exibe os erros de validação
             setError(result.error.errors[0].message);
-            setModal(true);
+
+            setTimeout(() => {
+                setModal(true);
+                setLoading(false);
+            },1000)
+
             return;
         }
 
@@ -84,6 +91,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                     const errorData = await response.json();
                     setError(errorData.message || 'Usuário ja registrado');
                     setModal(true);
+                    setLoading(false);
                     console.log(errorData);
                     return;
                 }
@@ -91,10 +99,15 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                 // Sucesso no registro
                 console.log("Registro realizado com sucesso!");
                 setCadSucess(false);
+                setLoading(false);
                 setError(''); // Limpa qualquer mensagem de erro anterior
             }else{
+                setLoading(true);
                 setError('Email ou senha não correspondem');
-                setModal(true);
+                setTimeout(() => {
+                    setModal(true);
+                    setLoading(false);
+                },1000)
                 console.log("Email ou senha não correspondem");
                 return
             }
@@ -103,9 +116,6 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
             console.log("Erro ao realizar o registro:", err);
             setError(err.message || 'Erro inesperado');
             setModal(true);
-        } finally {
-            setLoading(false); // Finalizar o carregamento
-            // console.log(localStorage.getItem('token'));
         }
     };
 
@@ -151,10 +161,12 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
     };
 
     const hendleLogin = async () => {
+        setLoading(true);
         const sucesse = await loginUser( email, password);
         console.log(sucesse);
         if(sucesse.PromiseResult === true){
             console.log("Login bem-sucedido");
+            setLoading(false);
         }else{
             console.log("Email ou senha não correspondem");
             setToogleForm(!toogleForm)
@@ -230,8 +242,8 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                                     required
                                     $bg_color_input="var(--color-input-bg)"
                                     $bg_hover_input="var(--color-input-bg-hover)"
-                                    maxlength="10"
-                                    minlength="7"
+                                    maxLength="10"
+                                    minLength="7"
                                 />
                                     
                             </div>
@@ -252,8 +264,8 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                                     required
                                     $bg_color_input="var(--color-input-bg)"
                                     $bg_hover_input="var(--color-input-bg-hover)"
-                                    maxlength="11"
-                                    minlength="11"
+                                    maxLength="11"
+                                    minLength="11"
                                 />
                             </div>
                         </div>
@@ -354,8 +366,8 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                                     onChange={handleCnpjChange}
                                     $bg_color_input="var(--color-input-bg)"
                                     $bg_hover_input="var(--color-input-bg-hover)"
-                                    minlength="18"
-                                    maxlength="18"
+                                    minLength="18"
+                                    maxLength="18"
                                 />
                             </div>
                         </div>
@@ -377,6 +389,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                         $bg_hover="var(--color-secondary-btn-bg-hover)"
                         onClick={() => setToogleForm(!toogleForm)}
                     />
+                    {loading && <Loader/>}
                 </FormWrapper> :
                 <FormWrapper directionText="true" >
                     <img src={ImgAprov} alt="visto de tudo certo!" />
@@ -391,6 +404,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                         $bg_hover="var(--color-primary-btn-bg-hover)"
                         onClick={() => hendleLogin()}
                     />
+                    {loading && <Loader/>}
                 </FormWrapper>
             }
             <Modal 

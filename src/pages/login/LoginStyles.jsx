@@ -98,32 +98,33 @@ export const Container_login = styled.section`
         align-items: center;
         padding: 1.2rem;
         overflow: hidden;
-        animation: slide 60s infinite ease-in-out;
+        background:  #000 url(${image_city02}) no-repeat right center / cover;
+        animation: slide 10s infinite ease-in-out reverse;
 
         @keyframes slide {
             0% {
-                background: url(${image_hotel}) no-repeat right center / cover;
+                background:  #000 url(${image_hotel}) no-repeat right center / cover;
             }
             16.67% {
-                background: url(${image_hotel}) no-repeat right center / cover;
+                background:  #000 url(${image_hotel}) no-repeat right center / cover;
             }
             33.33% {
-                background: url(${image_quarto03}) no-repeat right center / cover;
+                background:  #000 url(${image_quarto03}) no-repeat right center / cover;
             }
             50% {
                 background: url(${image_quarto03}) no-repeat right center / cover;
             }
             66.67% {
-                background: url(${image_praia02}) no-repeat right center / cover;
+                background:  #000 url(${image_praia02}) no-repeat right center / cover;
             }
             83.33% {
-                background: url(${image_praia02}) no-repeat right center / cover;
+                background:  #000 url(${image_praia02}) no-repeat right center / cover;
             }
             90% {
-                background: url(${image_city02}) no-repeat right center / cover;
+                background:  #000 url(${image_city02}) no-repeat right center / cover;
             }
             100% {
-                background: url(${image_city02}) no-repeat right center / cover;
+                background:  #000 url(${image_city02}) no-repeat right center / cover;
             }
         }
 
@@ -131,28 +132,28 @@ export const Container_login = styled.section`
             @keyframes slide {
 
                 0% {
-                    background: url(${image_hotel}) no-repeat right center / cover;
+                    background:  #000 url(${image_hotel}) no-repeat right center / cover;
                 }
                 16.67% {
-                    background: url(${image_hotel}) no-repeat right center / cover;
+                    background:  #000 url(${image_hotel}) no-repeat right center / cover;
                 }
                 33.33% {
-                    background: url(${image_quarto01}) no-repeat right center / cover;
+                    background:  #000 url(${image_quarto01}) no-repeat right center / cover;
                 }
                 50% {
-                    background: url(${image_quarto01}) no-repeat right center / cover;
+                    background:  #000 url(${image_quarto01}) no-repeat right center / cover;
                 }
                 66.67% {
-                    background: url(${image_praia01}) no-repeat right center / cover;
+                    background:  #000 url(${image_praia01}) no-repeat right center / cover;
                 }
                 83.33% {
-                    background: url(${image_praia01}) no-repeat right center / cover;
+                    background:  #000 url(${image_praia01}) no-repeat right center / cover;
                 }
                 90% {
-                    background: url(${image_city01}) no-repeat right center / cover;
+                    background:  #000 url(${image_city01}) no-repeat right center / cover;
                 }
                 90% {
-                    background: url(${image_city01}) no-repeat right center / cover;
+                    background:  #000  url(${image_city01}) no-repeat right center / cover;
                 }
             }
         }

@@ -4,7 +4,7 @@ export const Container = styled.div`
 
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 6px;
-    padding: 10px 30px 30px;
+    padding: 10px 30px 40px;
     position: relative;
     max-width: 700px;
     z-index: 10;

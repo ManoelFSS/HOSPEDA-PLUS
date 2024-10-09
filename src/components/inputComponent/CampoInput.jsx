@@ -11,8 +11,8 @@ const CampoInput = (
             required,
             $bg_color_input,
             $bg_hover_input,
-            maxlength,
-            minlength
+            maxLength,
+            minLength
         }) => {
     return (
         <Input 
@@ -23,8 +23,8 @@ const CampoInput = (
             autoComplete={autoComplete} 
             onChange={onChange} 
             required={required}
-            maxlength={maxlength}
-            minlength={minlength}
+            maxLength={maxLength}
+            minLength={minLength}
             $bg_color_input={$bg_color_input}
             $bg_hover_input={$bg_hover_input}
         />

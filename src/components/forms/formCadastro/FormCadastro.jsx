@@ -10,10 +10,6 @@ import Loader from "../../load/Load";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 //imeges
 import ImgAprov from "../../../assets/images/tudocerto.png";
-import { set } from "mongoose";
-
-
-
 
 const FormCadastro = ({toogleForm, setToogleForm}) => {
 

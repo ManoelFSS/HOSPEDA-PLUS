@@ -4,7 +4,9 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 5px 8px 20px 0 rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
     border-radius: 6px;
     padding: 10px 30px 40px;
     position: relative;
@@ -15,14 +17,16 @@ export const Container = styled.div`
         width: 100%;
     }
     
-    img {
-        width: 130px;
+    .check {
+        font-size:4rem;
+        color:green; 
+        padding:5px;
     }
 
     span {
         font-size: 1.2rem;
-        font-weight: bolder;
-        color: var( --color-primary-text) ;
+        font-weight: 800;
+        color:#000;
         padding: 0px 5px;
     }
 

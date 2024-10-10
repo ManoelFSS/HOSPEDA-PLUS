@@ -40,8 +40,7 @@ export const Container_login = styled.section`
         }
 
         p {
-            font-size: 1.2rem;
-            font-weight: 400;
+            font-size: 1.1rem;
         }
 
         .icons {
@@ -78,12 +77,10 @@ export const Container_login = styled.section`
         .copyright {
             position: absolute;
             bottom: 0;
-            font-size: 0.8rem;
-            color: #fff;
-            font-weight: 100;
+            font-size: 1rem;
+            font-weight: 400;
             z-index: 2;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 0.5rem;
+            padding: 0.3rem;
             width: 100%;
             display: flex;
             align-items: center;
@@ -99,7 +96,7 @@ export const Container_login = styled.section`
         padding: 1.2rem;
         overflow: hidden;
         background:  #000 url(${image_city02}) no-repeat right center / cover;
-        animation: slide 10s infinite ease-in-out reverse;
+        animation: slide 20s infinite ease-in-out reverse;
 
         @keyframes slide {
             0% {

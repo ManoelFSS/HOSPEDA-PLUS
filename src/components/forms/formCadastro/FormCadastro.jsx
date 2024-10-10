@@ -7,9 +7,8 @@ import Modal from "../../modal/Modal";
 import { useAuth } from "../../../contexts/AuthContext";
 import Loader from "../../load/Load";
 //icones
-import { FaEyeSlash, FaEye } from "react-icons/fa";
-//imeges
-import ImgAprov from "../../../assets/images/tudocerto.png";
+import { FaEyeSlash, FaEye, FaCheck } from "react-icons/fa";
+
 
 const FormCadastro = ({toogleForm, setToogleForm}) => {
 
@@ -225,10 +224,11 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                     {loading && <Loader/>}
                 </FormWrapper> :
                 <FormWrapper directionText="true" >
-                    <img src={ImgAprov} alt="visto de tudo certo!" />
+                    <FaCheck className="check" />
                     <h2>Tudo certo!</h2>
                     <p>{name.split(" ")[0]} Seu cadastro foi realizado com sucesso!</p>
-                    <p>Você agora tem acesso ao sistema de gerenciamento do <span>Hospeda Plus.</span></p>
+                    <p>Você agora tem acesso ao sistema de gerenciamento do </p>
+                    <span>Hospeda Plus.</span>
                     <Btn
                         type="button"
                         value="Acessar o Painel" 

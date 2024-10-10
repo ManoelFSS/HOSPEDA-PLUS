@@ -17,15 +17,9 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
 
     const [name, setName] = useState('');
     const [celular, setCelular] = useState('');
-    const [dataNasc, setDataNasc] = useState('');
-    const [rg, setRg] = useState('');
-    const [cpf, setCpf] = useState('');
     const [email, setEmail] = useState('');
-    const [email2, setEmail2] = useState('');
     const [password, setPassword] = useState('');
-    const [password2, setPassword2] = useState('');
-    const [empresa, setEmpresa] = useState('');
-    const [cnpj, setCnpj] = useState('');
+ 
     const [loading, setLoading] = useState(false); // Adicione esta linha
     const [error, setError] = useState(''); // Para gerenciar mensagens de erro
     const [cadSucess, setCadSucess] = useState(true); //abrir card de cadastro bem sucedido
@@ -39,15 +33,8 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
         const trimmedData = {
             name: name.trim(),
             phone: celular.trim(),
-            dataNasc: dataNasc.trim(),
-            rg: rg.trim(),
-            cpf: cpf.trim(),
             email: email.trim().toLowerCase(),
-            email2: email2.trim().toLowerCase(),
             password: password.trim(),
-            password2: password2.trim(),
-            empresa: empresa.trim(),
-            cnpj: cnpj.trim(),
         };
 
         setName(trimmedData.name);
@@ -69,44 +56,31 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
         }
 
         try {
+
             setLoading(true); // Iniciar o carregamento
-            
-            if (trimmedData.email === trimmedData.email2 && trimmedData.password === trimmedData.password2) {
-                console.log("Email e senha correspondem");
-                // Enviar a requisição para a API
-                const response = await fetch('https://hospeda-back-end-production.up.railway.app/api/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(trimmedData), // Corrigido para usar trimmedData
-                });
+            // Enviar a requisição para a API
+            const response = await fetch('https://hospeda-back-end-production.up.railway.app/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(trimmedData), // Corrigido para usar trimmedData
+            });
 
-                // Verificar se a resposta foi bem-sucedida
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    setError(errorData.message || 'Usuário ja registrado');
-                    setModal(true);
-                    setLoading(false);
-                    console.log(errorData);
-                    return;
-                }
-
-                // Sucesso no registro
-                console.log("Registro realizado com sucesso!");
-                setCadSucess(false);
+            // Verificar se a resposta foi bem-sucedida
+            if (!response.ok) {
+                const errorData = await response.json();
+                setError(errorData.message || 'Usuário ja registrado');
+                setModal(true);
                 setLoading(false);
-                setError(''); // Limpa qualquer mensagem de erro anterior
-            }else{
-                setLoading(true);
-                setError('Email ou senha não correspondem');
-                setTimeout(() => {
-                    setModal(true);
-                    setLoading(false);
-                },1000)
-                console.log("Email ou senha não correspondem");
-                return
+                console.log(errorData);
+                return;
             }
+            // Sucesso no registro
+            console.log("Registro realizado com sucesso!");
+            setCadSucess(false);
+            setLoading(false);
+            setError(''); // Limpa qualquer mensagem de erro anterior
 
         } catch (err) {
             console.log("Erro ao realizar o registro:", err);
@@ -117,12 +91,10 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
 
     const handleCelularChange = (e) => {
         let celularValue = e.target.value.replace(/\D/g, ""); // Remove tudo que não for número
-    
         // Limita a quantidade de números a 11 (padrão do celular no Brasil)
         if (celularValue.length > 11) {
             celularValue = celularValue.slice(0, 11);
         }
-    
         // Adiciona a formatação (XX)XXXXX-XXXX sem o espaço após o DDD
         if (celularValue.length > 6) {
             celularValue = celularValue.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1)$2-$3"); // Formato completo (XX)XXXXX-XXXX
@@ -131,30 +103,9 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
         } else if (celularValue.length > 0) {
             celularValue = celularValue.replace(/^(\d{0,2})$/, "($1"); // Apenas o DDD, sem adicionar espaço
         }
-    
         setCelular(celularValue);
     };
     
-    
-    
-
-    const handleCnpjChange = (e) => {
-        const inputValue = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-        const formattedValue = formatCnpj(inputValue);
-        setCnpj(formattedValue);
-    };
-
-    const formatCnpj = (value) => {
-        if (value.length <= 14) {
-            return value
-                .replace(/^(\d{2})(\d)/, '$1.$2') // Adiciona o primeiro ponto
-                .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3') // Adiciona o segundo ponto
-                .replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4') // Adiciona a barra
-                .replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5') // Adiciona o traço
-                .replace(/(\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}).*/, '$1'); // Limita o tamanho
-        }
-        return value;
-    };
 
     const hendleLogin = async () => {
         setLoading(true);
@@ -168,7 +119,6 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
             setToogleForm(!toogleForm)
         }
     }
-    
 
     return (
         <>
@@ -210,60 +160,6 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                                     minlength="14"
                                 />
                             </div>
-                            <div>
-                                <label htmlFor="birthday">Data de Nascimento</label>
-                                <CampoInput 
-                                    type="date" 
-                                    id="birthday" 
-                                    placeholder="dd/mm/aaaa"
-                                    value={dataNasc}
-                                    onChange={(e) => setDataNasc(e.target.value)}
-                                    required
-                                    $bg_color_input="var(--color-input-bg)"
-                                    $bg_hover_input="var(--color-input-bg-hover)"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="input-field"> 
-                            <div>
-                                <label htmlFor="rg">RG</label>
-                                <CampoInput 
-                                    type="text" 
-                                    id="rg" 
-                                    autocomplete="rg"
-                                    placeholder="Digite seu RG"
-                                    value={rg}
-                                    onChange={(e) => setRg(e.target.value)}
-                                    required
-                                    $bg_color_input="var(--color-input-bg)"
-                                    $bg_hover_input="var(--color-input-bg-hover)"
-                                    maxLength="10"
-                                    minLength="7"
-                                />
-                                    
-                            </div>
-                            <div >
-                                <label htmlFor="cpf">CPF</label>
-                                <CampoInput 
-                                    type="number" 
-                                    id="cpf" 
-                                    placeholder="Digite seu CPF"
-                                    value={cpf}
-                                    onChange={(e) => {
-                                        // Remover qualquer caractere não numérico
-                                        const cpfValue = e.target.value.replace(/\D/g, ""); // Substitui qualquer caractere que não seja número
-                                        if (cpfValue.length <= 11) {
-                                        setCpf(cpfValue); // Limita a 11 dígitos
-                                        }
-                                    }}
-                                    required
-                                    $bg_color_input="var(--color-input-bg)"
-                                    $bg_hover_input="var(--color-input-bg-hover)"
-                                    maxLength="11"
-                                    minLength="11"
-                                />
-                            </div>
                         </div>
 
                         <div className="input-field">
@@ -275,20 +171,6 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                                     placeholder="digite seu e-mail"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)} 
-                                    required
-                                    autoComplete="email"
-                                    $bg_color_input="var(--color-input-bg)"
-                                    $bg_hover_input="var(--color-input-bg-hover)"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="email2">Confirmar E-mail </label>
-                                <CampoInput 
-                                    type="email" 
-                                    id="email2"
-                                    placeholder="Confirme seu e-mail"
-                                    value={email2}
-                                    onChange={(e) => setEmail2(e.target.value)} // Atualizando corretamente
                                     required
                                     autoComplete="email"
                                     $bg_color_input="var(--color-input-bg)"
@@ -317,57 +199,8 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                                     <FaEyeSlash className="eye" onClick={() => setVisbilePassword(!visbilePassword)} />
                                 )}
                             </div>
-                            <div>
-                                <label htmlFor="password2">Confirmar Senha</label>
-                                <CampoInput 
-                                    type={visbilePassword ? "text" : "password"} 
-                                    id="password2" 
-                                    placeholder="Confirme sua senha"
-                                    value={password2}
-                                    autoComplete="current-password" 
-                                    onChange={(e) => setPassword2(e.target.value)}
-                                    required
-                                    $bg_color_input="var(--color-input-bg)"
-                                    $bg_hover_input="var(--color-input-bg-hover)"
-                                />
-                                {visbilePassword ? (
-                                    <FaEye className="eye" onClick={() => setVisbilePassword(!visbilePassword)} />
-                                ) : (
-                                    <FaEyeSlash className="eye" onClick={() => setVisbilePassword(!visbilePassword)} />
-                                )}
-                            </div>
                         </div>
-
-                        <div className="input-field">
-                            <div>
-                                <label htmlFor="empresaname">Nome da Empresa</label>
-                                <CampoInput 
-                                    type="text" 
-                                    id="empresaname" 
-                                    placeholder="Digite o Nome"
-                                    value={empresa}
-                                    onChange={(e) => setEmpresa(e.target.value)}
-                                    required
-                                    $bg_color_input="var(--color-input-bg)"
-                                    $bg_hover_input="var(--color-input-bg-hover)"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="cnpj">CNPJ</label>
-                                <CampoInput 
-                                    type="text" 
-                                    id="cnpj" 
-                                    placeholder="00.000.000/0000-00"
-                                    value={cnpj}
-                                    onChange={handleCnpjChange}
-                                    $bg_color_input="var(--color-input-bg)"
-                                    $bg_hover_input="var(--color-input-bg-hover)"
-                                    minLength="18"
-                                    maxLength="18"
-                                />
-                            </div>
-                        </div>
-                    
+                        
                         <Btn 
                             type="submit" 
                             value="Cadastrar" 

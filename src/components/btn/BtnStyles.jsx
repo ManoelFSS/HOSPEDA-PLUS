@@ -4,14 +4,14 @@ export const Button = styled.input`
     width: ${({ $width }) => $width || "auto"};
     text-align: center;
     height: 35px;
-    padding: 0 20px;
+    padding: 0 12px;
     border-radius: 5px;
     border: none;
     outline: none;
     background-color: ${({ $bg_color }) => $bg_color };
     color: #000;
     font-size: 1.1rem;
-    font-weight: bolder;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
     margin-top: 15px;

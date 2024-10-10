@@ -8,7 +8,6 @@ export const Container = styled.div`
     position: relative;
     max-width: 700px;
     z-index: 10;
-    text-align: ${({ $directionText }) => $directionText === "true" ? "center" : "left"};
     
     img {
         width: 100px;
@@ -22,10 +21,13 @@ export const Container = styled.div`
     }
 
     h2 {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         font-weight: bolder;
         color: #000;
         text-align: center;
+        border-bottom: solid 3px var(--color-primary-text);
+        padding-bottom: 8px;
+        margin-bottom: 15px;
     }
 
     .input-field {
@@ -50,7 +52,7 @@ export const Container = styled.div`
         }
 
         label {
-            font-size: 1rem;
+            font-size: 1.2rem;
             font-weight: bolder;
             padding:  5px 0px;
             color: #000;
@@ -73,7 +75,7 @@ export const Container = styled.div`
 
     p {
         font-size: 1rem;
-        font-weight: bolder;
+        font-weight: 600;
         cursor: ${({ $directionText }) => $directionText === "true" ? "none" : "pointer"};
         trasition: all 0.3s;
         text-align: right;

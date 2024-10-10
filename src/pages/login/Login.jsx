@@ -21,7 +21,7 @@ const Login = () => {
                 <div>
                     <Logo image={image} />
                     <h1>HOSPEDA PLUS</h1>
-                    <p>Mais do que um Sistema</p>
+                    <p>Tudo o que seu hotel precisa.</p>
                     <div className="icons">
                         <FaWhatsapp className="whatsapp" onClick={() => window.open('https://wa.me/5574935050160', '_blank')} />
                         <FaFacebook className="facebook" onClick={() => window.open('https://www.facebook.com/manoel.fernando.50', '_blank')} />

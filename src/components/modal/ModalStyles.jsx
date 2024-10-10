@@ -18,18 +18,17 @@ export const Modal_container = styled.div`
         width: 290px;
         border-radius: 5px;
         display: flex;
-        align-items: center;
         flex-direction: column;
-        gap: 10px;
+        align-items: center;
         position: relative;
-        padding: 10px 0px 35px;
+        padding: 10px 0px 10px;
 
         .icon-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            padding: 0px 10px;
+            padding:0px 10px 5px;
 
             .icon-error {
                 color: #F3AF00;
@@ -39,33 +38,37 @@ export const Modal_container = styled.div`
             }
 
             .icon-close {
-                font-size: 1.4rem;
+                font-size: 1.6rem;
                 cursor: pointer;
                 transition: all 0.3s;
-                color: #000;
+                color: #F3AF00;
 
                 &:hover {
-                    color: #F3AF00;
+                    color: red;
                 }
             }
         }
 
         p {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: auto;
             font-size: 0.9rem;
             font-weight: 500;
             background-color: var(--color-modal-error-message);
-            padding: 10px ;
+            padding: 15px 10px;
             color: #fff;
+            text-align: center;
+            width: 100%;
 
             span {
                 font-weight: bolder;
             }
         }
+
+        .btn-container {
+            width: 100%;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 0px 10px 5px;
+        } 
     }
+
 `

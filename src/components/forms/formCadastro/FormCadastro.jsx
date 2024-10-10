@@ -19,12 +19,13 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
     const [celular, setCelular] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
- 
+    
     const [loading, setLoading] = useState(false); // Adicione esta linha
     const [error, setError] = useState(''); // Para gerenciar mensagens de erro
     const [cadSucess, setCadSucess] = useState(true); //abrir card de cadastro bem sucedido
     const [visbilePassword, setVisbilePassword] = useState(false);
     const [modal, setModal] = useState(false);
+    const [btns, setBtns] = useState(false);
 
     const handleSubmit = async (e) => {
         setLoading(true);
@@ -69,8 +70,9 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
 
             // Verificar se a resposta foi bem-sucedida
             if (!response.ok) {
+                setBtns(true);
                 const errorData = await response.json();
-                setError(errorData.message || 'Usuário ja registrado');
+                setError('Ops!, Usuário ja registrado no Hospeda Plus, acesse sua conta, ou recupere sua senha' || errorData.message );
                 setModal(true);
                 setLoading(false);
                 console.log(errorData);
@@ -107,18 +109,20 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
     };
     
 
-    const hendleLogin = async () => {
+    const handleLogin = async () => {
         setLoading(true);
-        const sucesse = await loginUser( email, password);
-        console.log(sucesse);
-        if(sucesse.PromiseResult === true){
+        const success = await loginUser(email, password);  // Aqui, 'success' é um booleano
+        console.log(success);  // 'success' está retornando true ou false
+    
+        if (success) {  // Verifique diretamente se 'success' é verdadeiro
             console.log("Login bem-sucedido");
             setLoading(false);
-        }else{
-            console.log("Email ou senha não correspondem");
-            setToogleForm(!toogleForm)
+        } else {
+            console.log("Email ou senha não correspondem");
+            setToogleForm(!toogleForm);
         }
-    }
+    };
+
 
     return (
         <>
@@ -231,7 +235,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                         $width="100%"
                         $bg_color="var(--color-primary-btn-bg)"
                         $bg_hover="var(--color-primary-btn-bg-hover)"
-                        onClick={() => hendleLogin()}
+                        onClick={() => handleLogin()}
                     />
                     {loading && <Loader/>}
                 </FormWrapper>
@@ -239,7 +243,10 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
             <Modal 
                 setModal={setModal}
                 modal={modal}
-                text={error} 
+                text={error}
+                setToogleForm={setToogleForm}
+                toogleForm={toogleForm}
+                btns={btns}
             />
         </>
     )

@@ -10,6 +10,10 @@ export const Container = styled.div`
     position: relative;
     max-width: 700px;
     z-index: 10;
+
+    form {
+        width: 100%;
+    }
     
     img {
         width: 130px;

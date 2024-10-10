@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 6px;
     padding: 10px 30px 40px;
@@ -10,7 +12,7 @@ export const Container = styled.div`
     z-index: 10;
     
     img {
-        width: 100px;
+        width: 130px;
     }
 
     span {
@@ -21,6 +23,7 @@ export const Container = styled.div`
     }
 
     h2 {
+        width: 100%;
         font-size: 1.5rem;
         font-weight: bolder;
         color: #000;
@@ -32,6 +35,7 @@ export const Container = styled.div`
 
     .input-field {
         display: flex;
+
         flex-direction: ${({ $direction }) => $direction === "true" ? "Row" : "Column"};
         position: relative;
         min-width: 300px;

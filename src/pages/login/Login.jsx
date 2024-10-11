@@ -6,6 +6,7 @@ import image from "../../assets/images/icone.png";
 import Logo from "../../components/logo/Logo";
 import LoginForm from "../../components/forms/login_Form/LoginForm";
 import FormCadastro from "../../components/forms/formCadastro/FormCadastro";
+import FormReset from "../../components/forms/form_reset/FormReset";
 // icons
 import { FaWhatsapp, FaFacebook, FaInstagram  } from "react-icons/fa";
 
@@ -31,16 +32,23 @@ const Login = () => {
                 <p className="copyright"> © 2024 Hospeda Plus.</p>
             </section>
             <section className="box-right">
-                { toogleForm ? 
-                    <LoginForm  
-                        toogleForm={toogleForm} 
-                        setToogleForm={setToogleForm} 
-                    /> : 
-                    <FormCadastro
-                        toogleForm={toogleForm} 
-                        setToogleForm={setToogleForm}
-                    />
-                } 
+            {
+                true ? (
+                    <FormReset />
+                ) : (
+                    toogleForm ? (
+                        <LoginForm  
+                            toogleForm={toogleForm} 
+                            setToogleForm={setToogleForm} 
+                        />
+                    ) : (
+                        <FormCadastro 
+                            toogleForm={toogleForm} 
+                            setToogleForm={setToogleForm}
+                        />
+                    )
+                )
+            }
             </section>
         </Container_login>
     )

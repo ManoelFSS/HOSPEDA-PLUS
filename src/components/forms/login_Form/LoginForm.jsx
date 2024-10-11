@@ -130,6 +130,7 @@ const LoginForm = ({setToogleForm, toogleForm}) => {
                     type="button"
                     value="Cadastre-se" 
                     $width="100%" 
+                    color="#000"
                     $bg_color="var(--color-secondary-btn-bg)"
                     $bg_hover="var(--color-secondary-btn-bg-hover)"
                     onClick={() => setToogleForm(!toogleForm)}

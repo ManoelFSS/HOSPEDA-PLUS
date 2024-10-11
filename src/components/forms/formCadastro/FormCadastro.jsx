@@ -220,6 +220,7 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                         $bg_color="var(--color-secondary-btn-bg)"
                         $bg_hover="var(--color-secondary-btn-bg-hover)"
                         onClick={() => setToogleForm(!toogleForm)}
+                        color="#000"
                     />
                     {loading && <Loader/>}
                 </FormWrapper> :

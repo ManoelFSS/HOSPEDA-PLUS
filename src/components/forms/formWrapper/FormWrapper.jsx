@@ -1,8 +1,12 @@
 import { Container } from "./FormWrapperStyles"
 
-const FormWrapper = ({ children, direction, directionText }) => {
+const FormWrapper = ({ children, direction, directionText, maxWidth }) => {
     return (
-        <Container $direction={direction} $directionText={directionText}>
+        <Container 
+            $direction={direction} 
+            $directionText={directionText}
+            style={{maxWidth: maxWidth}}
+        >
             {children}
         </Container>
     )

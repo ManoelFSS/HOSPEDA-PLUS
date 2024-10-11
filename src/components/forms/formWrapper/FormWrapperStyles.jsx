@@ -41,6 +41,22 @@ export const Container = styled.div`
         margin-bottom: 15px;
     }
 
+    .text-reset {
+        font-weight: 800;
+        transition: all 0.3s;
+        border: none;
+        margin-top: 10px;
+
+        p {
+            font-size: 1rem;
+            padding: 10px 0px ;
+            color:#000;
+            cursor: none;
+            font-weight: 700;
+            text-align: center;
+        }
+    }
+
     .input-field {
         display: flex;
 
@@ -95,11 +111,6 @@ export const Container = styled.div`
         padding: 8px 0 0;
         trasition: all 0.3s;
         text-align: ${({ $directionText }) => $directionText === "true" ? "center" : "left"};
-
-        &:hover {
-            text-decoration: ${({ $directionText }) => $directionText === "true" ? "none" : "underline"};
-
-        }
     }
 
     h3 {

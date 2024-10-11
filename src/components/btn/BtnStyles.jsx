@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Button = styled.input`
-    width: ${({ $width }) => $width || "auto"};
+    width: 100%;
     text-align: center;
     height: 35px;
     padding: 0 12px;
@@ -15,6 +15,7 @@ export const Button = styled.input`
     cursor: pointer;
     transition: all 0.3s;
     margin-top: 15px;
+    color: #fff;
 
     &:hover {
         background-color: ${({ $bg_hover }) => $bg_hover };

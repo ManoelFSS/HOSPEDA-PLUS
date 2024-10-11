@@ -10,7 +10,7 @@ import Loader from "../../load/Load";
 import { FaEyeSlash, FaEye, FaCheck } from "react-icons/fa";
 
 
-const FormCadastro = ({toogleForm, setToogleForm}) => {
+const FormCadastro = ({toogleForm, setToogleForm, setResetForm, resetForm}) => {
 
     const { loginUser } = useAuth();// provedor de contexto
 
@@ -248,6 +248,8 @@ const FormCadastro = ({toogleForm, setToogleForm}) => {
                 setToogleForm={setToogleForm}
                 toogleForm={toogleForm}
                 btns={btns}
+                setResetForm={setResetForm}
+                resetForm={resetForm}
             />
         </>
     )

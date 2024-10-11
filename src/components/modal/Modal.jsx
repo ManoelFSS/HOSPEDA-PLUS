@@ -4,7 +4,7 @@ import { BiSolidError } from "react-icons/bi";
 import { FaWindowClose } from "react-icons/fa";
 import Btn from "../btn/Btn";
 
-const Modal = ({text, setModal, modal,  setToogleForm, toogleForm, btns}) => {
+const Modal = ({text, setModal, modal,  setToogleForm, toogleForm, btns, setResetForm, resetForm}) => {
     return (
         
         <Modal_container style={{display: modal ? "flex" : "none"}}>
@@ -29,9 +29,10 @@ const Modal = ({text, setModal, modal,  setToogleForm, toogleForm, btns}) => {
                             style={{paddign: "10px"}}
                             type="button" 
                             value="Redefinir Senha"
-                            onClick={() => setModal(!modal)}
+                            onClick={() => setResetForm(!resetForm)}
                             $bg_color="var(--color-primary-btn-bg)"
                             $bg_hover="var(--color-primary-btn-bg-hover)"
+                            
                         />
                     </div>
                 }

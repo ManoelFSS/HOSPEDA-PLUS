@@ -13,7 +13,7 @@ import FormWrapper from "../formWrapper/FormWrapper.jsx";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 
-const LoginForm = ({setToogleForm, toogleForm}) => {
+const LoginForm = ({setToogleForm, toogleForm, setResetForm, resetForm}) => {
 
     const { loginUser, loading, setLoading} = useAuth();// provedor de contexto
 
@@ -117,7 +117,11 @@ const LoginForm = ({setToogleForm, toogleForm}) => {
                             <FaEyeSlash className="eye" onClick={togglePasswordVisibility} />
                         )}
                     </div>
-                    <p>Esqueceu sua senha?</p>
+                    <p  
+                        onClick={() => setResetForm(!resetForm)}
+                    >
+                        Esqueceu sua senha?
+                    </p>
                     <Btn 
                         type="submit" 
                         value="Entrar" 

@@ -5,10 +5,9 @@ import Btn from "../../btn/Btn"
 import Loader from "../../load/Load"
 // icons
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { set } from "mongoose"
 
 
-const FormReset = () => {
+const FormReset = ({ toogleForm, setToogleForm, setResetForm, resetForm }) => {
 
     const [labelEmail, setLabelEmail] = useState("E-mail")
     const [labelCode, setLabelCode] = useState("Código")
@@ -205,6 +204,15 @@ const FormReset = () => {
                         }
                     </section>
                 }
+                <Btn 
+                        type="button"
+                        value="Voltar" 
+                        $width="100%"
+                        $bg_color="var(--color-secondary-btn-bg)"
+                        $bg_hover="var(--color-secondary-btn-bg-hover)"
+                        onClick={() => {setToogleForm(true), setResetForm(!resetForm)}}
+                        color="#000"
+                    />
             </form>
             {loading &&
                 <Loader/>

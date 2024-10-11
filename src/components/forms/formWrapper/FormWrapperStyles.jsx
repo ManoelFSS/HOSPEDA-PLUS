@@ -111,6 +111,10 @@ export const Container = styled.div`
         padding: 8px 0 0;
         trasition: all 0.3s;
         text-align: ${({ $directionText }) => $directionText === "true" ? "center" : "left"};
+
+        &:hover {
+            text-decoration: ${({ $directionText }) => $directionText === "true" ? "none" : "underline"};
+        }
     }
 
     h3 {

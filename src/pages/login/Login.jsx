@@ -13,6 +13,7 @@ import { FaWhatsapp, FaFacebook, FaInstagram  } from "react-icons/fa";
 const Login = () => {
 
     const [toogleForm, setToogleForm] = useState(true);
+    const [resetForm, setResetForm] = useState(false);
 
 
 
@@ -33,18 +34,27 @@ const Login = () => {
             </section>
             <section className="box-right">
             {
-                true ? (
-                    <FormReset />
+                resetForm ? (
+                    <FormReset
+                        toogleForm={toogleForm} 
+                        setToogleForm={setToogleForm}
+                        setResetForm={setResetForm}
+                        resetForm={resetForm}
+                    />
                 ) : (
                     toogleForm ? (
                         <LoginForm  
                             toogleForm={toogleForm} 
                             setToogleForm={setToogleForm} 
+                            setResetForm={setResetForm}
+                            resetForm={resetForm}
                         />
                     ) : (
                         <FormCadastro 
                             toogleForm={toogleForm} 
                             setToogleForm={setToogleForm}
+                            setResetForm={setResetForm}
+                            resetForm={resetForm}
                         />
                     )
                 )

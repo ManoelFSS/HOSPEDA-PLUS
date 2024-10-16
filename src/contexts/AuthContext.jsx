@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }) => {
             // Login bem-sucedido
             localStorage.setItem('token', data.token);
             localStorage.setItem('_id', data._id);
+            localStorage.setItem('refreshToken', true);
             setIsLoggedIn(true);
             setUser(data.user); // Armazena os dados do usuário
     
@@ -59,69 +60,70 @@ export const AuthProvider = ({ children }) => {
     const logoutUser = () => {
         setUser(null); // Limpa os dados do usuário
         localStorage.removeItem('token'); // Remove o token do localStorage
+        localStorage.removeItem('refreshToken');
         setIsLoggedIn(false); // Atualiza o estado para indicar que o usuário não está mais logado
-    };
-
-    // Método para atualizar o token
-    const refreshToken = async () => {
-        const token = localStorage.getItem('token');
-
-        if (token) {
-            try {
-                const response = await axios.get('https://hospeda-back-end-production.up.railway.app/api/refresh-token', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                if (response.data.token) {
-                    localStorage.setItem('token', response.data.token);
-                    console.log('Token atualizado com sucesso');
-                }
-            } catch (error) {
-                console.error('Erro ao atualizar o token:', error);
-                logoutUser(); // Logout caso o refresh falhe
-            }
-        }
     };
 
     // Verifica se o usuário está autenticado
     useEffect(() => {
         const token = localStorage.getItem('token'); // Verifica se o token existe no localStorage
-
+    
         if (token) {
             // Faz a requisição para verificar o token
             axios
-                .get('https://hospeda-back-end-production.up.railway.app/api/verify-token', { 
-                    headers: { 
+                .get('https://hospeda-back-end-production.up.railway.app/api/verify-token', {
+                    headers: {
                         Authorization: `Bearer ${token}`,
-                    } 
+                    }
                 })
                 .then((response) => {
                     // Verifica se a mensagem de retorno é "Token válido"
                     console.log(response.data);
-
+    
                     if (response.data.message === 'Token válido') {
-                        localStorage.setItem('token', response.data.token);
+                        // Salva o novo token apenas se for retornado um novo token na resposta
+                        if (response.data.token) {
+                            localStorage.setItem('token', response.data.token);
+                        }
                         console.log('Token verificado com sucesso:');
                         setUser(response.data.user); // Armazena os dados do usuário
                         setIsLoggedIn(true); // Marca o usuário como autenticado
                     } else {
-                        console.log('Token inválido, removendo token...');
-                        localStorage.removeItem('token'); // Remove o token se for inválido
-                        setIsLoggedIn(false); // Marca o usuário como não autenticado
+                        console.log('Token inválido, tentando renovar...');
+                        handleTokenRefresh(); // Tenta renovar o token
                     }
                 })
                 .catch((error) => {
                     console.error('Erro ao verificar o token:', error);
-                    localStorage.removeItem('token'); // Remove o token se houver erro
-                    setIsLoggedIn(false); // Marca o usuário como não autenticado
+                    // Se houver erro na verificação do token, tenta renovar antes de deslogar
+                    handleTokenRefresh();
                 });
         } else {
             console.log('Nenhum token encontrado, redirecionando para login.');
             setIsLoggedIn(false); // Marca o usuário como não autenticado
         }
     }, []);
+    
+    // Função para renovar o token
+    const handleTokenRefresh = async () => {
+        const refreshToken = localStorage.getItem('refreshToken'); // Supondo que você armazene o refreshToken
+    
+        if (refreshToken) {
+            try {
+                const response = await axios.post('https://hospeda-back-end-production.up.railway.app/api/refresh-token', { refreshToken });
+                localStorage.setItem('token', response.data.token); // Atualiza o token no localStorage
+                console.log('Token renovado com sucesso');
+                setIsLoggedIn(true); // Mantém o usuário logado
+            } catch (error) {
+                console.error('Erro ao renovar o token:', error);
+                localStorage.removeItem('refreshToken');
+                logoutUser(); // Faz logout se o refresh falhar
+            }
+        } else {
+            console.log('Nenhum refreshToken disponível. Fazendo logout...');
+            logoutUser();
+        }
+    };
 
     return (
         <AuthContext.Provider value={{ 
@@ -131,7 +133,6 @@ export const AuthProvider = ({ children }) => {
             isLoggedIn,
             loginUser, 
             logoutUser, // usar para deslogar o usuário
-            refreshToken, // Método para atualizar o token
             setLoading,
         }}>
             {children}

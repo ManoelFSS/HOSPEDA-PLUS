@@ -7,10 +7,8 @@ import Loader from "../../load/Load.jsx";
 import Btn from "../../btn/Btn.jsx";
 import CampoInput from "../../inputComponent/CampoInput.jsx";
 import FormWrapper from "../formWrapper/FormWrapper.jsx";
-
 // icons
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-
 
 const LoginForm = ({setToogleForm, toogleForm, setResetForm, resetForm}) => {
 
@@ -22,55 +20,62 @@ const LoginForm = ({setToogleForm, toogleForm, setResetForm, resetForm}) => {
     const [modal, setModal] = useState(false);
     const [textError, setTextError] = useState("");
 
-    // const validateEmail = (email) => {
-    //     const allowedDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com'];
-
-    //     const domain = email.split('@')[1];
-    //     if (!allowedDomains.includes(domain)) {
-    //         return "E-mail inválido, Por favor verifique seu e-mail e tente novamente.";
-    //     }
-
-    //     verifyTypes();
-    // };
-
-    const verifyTypes = async () => {
-
-        try {
-            setLoading(true);
-            
-            loginSchema.safeParse({email, password}); // validação do schema zod retorna um error se houver e para a execução
-            const success = await loginUser(email, password);
-
-            if(typeof success === "string"){
-                setTextError("Falha na autenticação, Por favor verifique o E-mail e Senha e tente novamente.");
-                setLoading(false);
-                setModal(true);
-            }
-
-        } catch (error) {
-            const errorMessage = error.errors[0]?.message || 'Erro de validaçao dos campos do email e senha de autenticação';
-            setTextError(errorMessage);
-            setTimeout(() => {
-                setLoading(false);
-                setModal(true);
-            },2000)
+    const validateEmail = (email) => {
+        const allowedDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com'];
+        const domain = email.split('@')[1];
+        if (!allowedDomains.includes(domain)) {
+            return "E-mail inválido, Por favor verifique seu e-mail e tente novamente.";
         }
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault(); 
+    const verifyTypes = async () => {
         setLoading(true);
-        if(email !== "" && password !== ""){
-            
-            const validationResult = verifyTypes();
-            if ( typeof validationResult === "string") {
-                setTextError(validationResult);
+        const validationResult = loginSchema.safeParse({ email, password });
+
+        if (!validationResult.success) {
+            const errorMessage = validationResult.error.errors[0]?.message || 'Erro de validação';
+            setTimeout(() => {
+                setTextError(errorMessage);
+                setModal(true);
+                setLoading(false);
+            }, 2000);
+            return false;
+        }
+
+        const success = await loginUser(email, password);
+
+        if (typeof success === "string") {
+            setTextError("Falha na autenticação. Por favor, verifique o E-mail e Senha e tente novamente.");
+            setLoading(false);
+            setModal(true);
+            return false;
+        }
+
+        return true;
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+
+        if (email !== "" && password !== "") {
+            const domainValidation = validateEmail(email);
+            if (domainValidation) {
                 setTimeout(() => {
-                    setLoading(false);
+                    setTextError(domainValidation);
                     setModal(true);
-                },2000)
+                    setLoading(false);
+                }, 2000);
+                return;
             }
-        }     
+
+            const validationResult = await verifyTypes();
+            if (!validationResult) {
+                return;
+            }
+        }
+
+        setLoading(false);
     };
 
     const togglePasswordVisibility = () => {

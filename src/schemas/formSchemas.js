@@ -33,8 +33,8 @@ const cadastroSchema = z.object({
 
 // validação do formulário de login
 const loginSchema = z.object({
-    email: z.string().email(),
-    password: z.string(),
+    email: emailSchema,
+    password: z.string().min(8, { message: "A senha deve ter no mínimo 8 caracteres. Por favor verifique a Senha e tente novamente." }),
 });
 
 // Exportar os esquema de validação

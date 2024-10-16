@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+// components
 import FormWrapper from "../formWrapper/FormWrapper"
 import CampoInput from "../../inputComponent/CampoInput";
 import Btn from "../../btn/Btn";
-import {cadastroSchema} from "../../../schemas/cadastroSchema";
 import Modal from "../../modal/Modal";
-import { useAuth } from "../../../contexts/AuthContext";
 import Loader from "../../load/Load";
+// schemas zod
+import {cadastroSchema} from "../../../schemas/formSchemas";
+// context
+import { useAuth } from "../../../contexts/AuthContext";
 //icones
 import { FaEyeSlash, FaEye, FaCheck } from "react-icons/fa";
-
+//functions
+import {handleFormatCelular} from "../formHelpers/formUtils";
 
 const FormCadastro = ({toogleForm, setToogleForm, setResetForm, resetForm}) => {
 
@@ -90,23 +94,6 @@ const FormCadastro = ({toogleForm, setToogleForm, setResetForm, resetForm}) => {
         }
     };
 
-    const handleCelularChange = (e) => {
-        let celularValue = e.target.value.replace(/\D/g, ""); // Remove tudo que não for número
-        // Limita a quantidade de números a 11 (padrão do celular no Brasil)
-        if (celularValue.length > 11) {
-            celularValue = celularValue.slice(0, 11);
-        }
-        // Adiciona a formatação (XX)XXXXX-XXXX sem o espaço após o DDD
-        if (celularValue.length > 6) {
-            celularValue = celularValue.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1)$2-$3"); // Formato completo (XX)XXXXX-XXXX
-        } else if (celularValue.length > 2) {
-            celularValue = celularValue.replace(/^(\d{2})(\d{0,5})$/, "($1)$2"); // Adiciona DDD e primeiros números, sem espaço
-        } else if (celularValue.length > 0) {
-            celularValue = celularValue.replace(/^(\d{0,2})$/, "($1"); // Apenas o DDD, sem adicionar espaço
-        }
-        setCelular(celularValue);
-    };
-    
 
     const handleLogin = async () => {
         setLoading(true);
@@ -155,7 +142,7 @@ const FormCadastro = ({toogleForm, setToogleForm, setResetForm, resetForm}) => {
                                     placeholder="Ex: (99) 99999-9999"
                                     autocomplete="tel"
                                     value={celular}
-                                    onChange={handleCelularChange}
+                                    onChange={(e) => setCelular(handleFormatCelular(e))}
                                     required
                                     $bg_color_input="var(--color-input-bg)"
                                     $bg_hover_input="var(--color-input-bg-hover)"

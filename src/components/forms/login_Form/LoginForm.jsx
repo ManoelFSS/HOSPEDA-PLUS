@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-
-import { validateLoginSchema } from "../../../schemas/loginSchema.js";
+import { loginSchema } from "../../../schemas/formSchemas.js";
 // components
 import Modal from "../../modal/Modal";
 import { useAuth } from "../../../contexts/AuthContext";
@@ -23,29 +22,29 @@ const LoginForm = ({setToogleForm, toogleForm, setResetForm, resetForm}) => {
     const [modal, setModal] = useState(false);
     const [textError, setTextError] = useState("");
 
-    const validateEmail = (email) => {
-        const allowedDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com'];
+    // const validateEmail = (email) => {
+    //     const allowedDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com'];
 
-        const domain = email.split('@')[1];
-        if (!allowedDomains.includes(domain)) {
-            return "E-mail inválido, Por favor verifique seu e-mail e tente novamente.";
-        }
+    //     const domain = email.split('@')[1];
+    //     if (!allowedDomains.includes(domain)) {
+    //         return "E-mail inválido, Por favor verifique seu e-mail e tente novamente.";
+    //     }
 
-        verifyTypes();
-    };
+    //     verifyTypes();
+    // };
 
     const verifyTypes = async () => {
+
         try {
             setLoading(true);
-            const res =  validateLoginSchema( email, password ); // validação do schema zod
-            const success = await loginUser(res.email, res.password);
+            
+            loginSchema.safeParse({email, password}); // validação do schema zod retorna um error se houver e para a execução
+            const success = await loginUser(email, password);
 
-            if(success){
-                console.log("Login bem-sucedido");
-            }else{
+            if(typeof success === "string"){
+                setTextError("Falha na autenticação, Por favor verifique o E-mail e Senha e tente novamente.");
+                setLoading(false);
                 setModal(true);
-                setTextError('Erro  de autenticação. Verifique seu e-mail e senha e tente novamente');
-                return
             }
 
         } catch (error) {
@@ -63,7 +62,7 @@ const LoginForm = ({setToogleForm, toogleForm, setResetForm, resetForm}) => {
         setLoading(true);
         if(email !== "" && password !== ""){
             
-            const validationResult = validateEmail(email);
+            const validationResult = verifyTypes();
             if ( typeof validationResult === "string") {
                 setTextError(validationResult);
                 setTimeout(() => {

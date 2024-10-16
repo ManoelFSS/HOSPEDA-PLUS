@@ -25,22 +25,24 @@ export const AuthProvider = ({ children }) => {
                 },
                 body: JSON.stringify({ email, password })
             });
-
+    
             // Verifique se a resposta é ok (status 200-299)
             if (!response.ok) {
-                return false;
+                const errorData = await response.json(); // Tenta pegar a mensagem de erro da resposta
+                return errorData.message || 'Erro no login. Tente novamente.' ; // Retorna erro com mensagem
             }
-
+    
             const data = await response.json();
             console.log(data);
-
+    
             // Login bem-sucedido
             localStorage.setItem('token', data.token);
             localStorage.setItem('_id', data._id);
             setIsLoggedIn(true);
             setUser(data.user); // Armazena os dados do usuário
-            return true;
-
+    
+            // return true ; // Retorna sucesso
+    
         } catch (err) {
             console.log("Error during authentication:", err);
             setError(err.message || 'Erro inesperado'); // Atualiza a mensagem de erro
@@ -51,6 +53,7 @@ export const AuthProvider = ({ children }) => {
             console.log(localStorage.getItem('token'));
         }
     };
+    
 
     // Método para logout do usuário
     const logoutUser = () => {

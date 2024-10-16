@@ -7,7 +7,7 @@ import Loader from "../../load/Load"
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 
-const FormReset = ({ toogleForm, setToogleForm, setResetForm, resetForm }) => {
+const FormReset = ({ setToogleForm, setResetForm, resetForm }) => {
 
     const [labelEmail, setLabelEmail] = useState("E-mail")
     const [labelCode, setLabelCode] = useState("Código")
@@ -103,7 +103,6 @@ const FormReset = ({ toogleForm, setToogleForm, setResetForm, resetForm }) => {
                     alert("Senha alterada com sucesso")
                 }else {
                     alert("Ops!, as senhas digitadas devem ser iguais.")
-                    return
                 }
             }else{
                 alert("Todos os campos devem ser preenchidos")

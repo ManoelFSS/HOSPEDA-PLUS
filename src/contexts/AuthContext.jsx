@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
             // Login bem-sucedido
             localStorage.setItem('token', data.token);
             localStorage.setItem('_id', data._id);
-            localStorage.setItem('refreshToken', true);
+            localStorage.setItem('refreshToken', data.refreshToken);  // Refresh token
             setIsLoggedIn(true);
             setUser(data.user); // Armazena os dados do usuário
     
